@@ -1,0 +1,29 @@
+package com.android.beez.api;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import android.content.Context;
+
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.beez.app.AppController;
+
+public abstract class BaseNewsSourceApiClient extends ASyncTask<> {
+	
+	//Attributes json 
+	protected String id_news;
+	protected String title;
+	protected String headline;
+	protected String url_headline_img;
+	
+	protected String origin_url;
+	protected String app_domain;
+	protected String cate_id;
+	
+	protected String short_link;
+	protected String time;
+	protected int view;
+	
+	
+}

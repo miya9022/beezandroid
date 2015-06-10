@@ -1,0 +1,75 @@
+package com.android.beez.utils;
+
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.music.arc.musicarc.model.SongModel;
+
+public class JSONHelper {
+
+	public static ArrayList<SongModel> parseJsonArtist2Songs(String data){
+		try {
+			JSONObject jsonObject = new JSONObject(data);
+			String code = jsonObject.getString(Params.CODE);
+			if (!Params.OK.equals(code)){
+				return null;
+			}
+			
+			String albumImage = null;
+			JSONArray jsonItems =jsonObject.getJSONObject(Params.DATA).getJSONArray(Params.SONGS);
+			if (jsonItems.length() <= 0){
+				return null;
+			}
+			
+			ArrayList<SongModel> songList = new ArrayList<SongModel>();			
+			for(int i=0; i<jsonItems.length(); i++){
+				JSONObject item = jsonItems.getJSONObject(i);
+				albumImage = item.optString(Params.ALBUM_IMAGE,"NULL");
+				JSON2Object j2o = new JSON2Object(SongModel.class, item);
+				SongModel song = (SongModel)j2o.parse();
+				if (albumImage != null){
+					song.setAlbumImage(albumImage);
+				}
+				songList.add(song);
+			}
+			return songList;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public static ArrayList<SongModel> parseJsonSearchSingle2Songs(String data){
+		try {
+			JSONObject jsonObject = new JSONObject(data);
+			String code = jsonObject.getString(Params.CODE);
+			if (!Params.OK.equals(code)){
+				return null;
+			}
+			
+			String albumImage = null;
+			JSONArray jsonItems =jsonObject.getJSONArray(Params.DATA);
+			if (jsonItems.length() <= 0){
+				return null;
+			}
+			
+			ArrayList<SongModel> songList = new ArrayList<SongModel>();			
+			for(int i=0; i<jsonItems.length(); i++){
+				JSONObject item = jsonItems.getJSONObject(i);
+				albumImage = item.optString(Params.ALBUM_IMAGE,"NULL");
+				JSON2Object j2o = new JSON2Object(SongModel.class, item);
+				SongModel song = (SongModel)j2o.parse();
+				if (albumImage != null){
+					song.setAlbumImage(albumImage);
+				}
+				songList.add(song);
+			}
+			return songList;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+}

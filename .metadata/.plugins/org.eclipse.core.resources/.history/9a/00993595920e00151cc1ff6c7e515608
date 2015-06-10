@@ -1,0 +1,9 @@
+package com.android.beez;
+
+import android.support.v7.internal.widget.AdapterViewCompat.OnItemClickListener;
+import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver.OnScrollChangedListener;
+
+public class NewsDisplayer implements OnItemClickListener, OnScrollChangedListener {
+	
+}

@@ -1,0 +1,16 @@
+package com.android.beez.api;
+
+public interface NewsSourceApiClient {
+	static final String ID  = "id";
+	static final String TITLE = "title";
+	static final String HEAD_LINE = "headline";
+	static final String HEAD_LINE_IMG = "headline_img";
+	static final String ORIGIN_URL = "origin_url";
+	static final String APP_DOMAIN = "app_domain";
+	static final String CATE_ID = "cate_id";
+	static final String SHORT_LINK = "short_link";
+	static final String TIME = "time";
+	static final String VIEW = "view";
+	
+	
+}

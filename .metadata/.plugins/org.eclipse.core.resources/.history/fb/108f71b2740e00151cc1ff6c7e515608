@@ -1,0 +1,110 @@
+package com.android.beez.api;
+
+import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.*;
+
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.beez.app.AppController;
+
+public abstract class BaseNewsSourceApiClient extends AsyncTask<String, String, String> implements NewsSourceApiClient {
+	
+	//Attributes json 
+	protected String id_news;
+	protected String title;
+	protected String headline;
+	protected String url_headline_img;
+	
+	protected String origin_url;
+	protected String app_domain;
+	protected String cate_id;
+	
+	protected String short_link;
+	protected String time;
+	protected int view;
+	
+	public static String GET(String url){
+		InputStream inputStream = null;
+		String result = "";
+		try {
+			
+			// create HttpClient
+			HttpClient httpclient = new DefaultHttpClient();
+			
+			// make GET request to the given URL
+			HttpResponse httpResponse = httpclient.execute(new HttpGet(url));
+			
+			// receive response as inputStream
+			inputStream = httpResponse.getEntity().getContent();
+			
+			// convert inputstream to string
+			if(inputStream != null)
+				result = convertInputStreamToString(inputStream);
+			else
+				result = "Did not work!";
+		
+		} catch (Exception e) {
+			Log.d("InputStream", e.getLocalizedMessage());
+		}
+		
+		return result;
+	}
+	
+	private static String convertInputStreamToString(InputStream inputStream) throws IOException{
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
+        
+        inputStream.close();
+        return result;
+        
+    }
+	
+	@Override
+    protected String doInBackground(String... urls) {
+          
+        return GET(urls[0]);
+    }
+	
+	@Override
+    protected void onPostExecute(String result) {
+    	try {
+			JSONObject json = new JSONObject(result);
+			JSONArray datas = json.getJSONArray("data");
+//			str += "articles length = "+json.getJSONArray("articleList").length();
+//			str += "\n--------\n";
+//			str += "names: "+articles.getJSONObject(0).names();
+//			str += "\n--------\n";
+//			str += "url: "+articles.getJSONObject(0).getString("url");
+//			
+			int length = json.getJSONArray("articleList").length();
+			for(int i = 0; i < length; i++){
+				datas.getJSONObject(i).getString(ID);
+				datas.getJSONObject(i).getString(TIME);
+				datas.getJSONObject(i).getString(HEAD_LINE);
+				datas.getJSONObject(i).getString(HEAD_LINE_IMG);
+				datas.getJSONObject(i).getString(ORIGIN_URL);
+				datas.getJSONObject(i).getString(APP_DOMAIN);
+			}
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+   }
+}

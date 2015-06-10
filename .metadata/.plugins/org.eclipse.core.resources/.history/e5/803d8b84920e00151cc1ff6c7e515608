@@ -1,0 +1,8 @@
+package com.android.beez;
+
+import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver.OnScrollChangedListener;
+
+public class NewsDisplayer implements OnClickListener, OnScrollChangedListener {
+	
+}

@@ -1,0 +1,10 @@
+app_version=1.0
+auid=beez
+api_base_url=http://stagingbeez.codelovers.vn/api/api
+base_url=http://stagingbeez.codelovers.vn
+db_name=beez.db
+display_quota=100
+history_quota=50
+share_to_increase=100
+ga_tracking_id=UA-60359707-3
+astir_media_id=MEDIA-ad2753b9

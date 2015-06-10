@@ -1,0 +1,5 @@
+package com.android.beez.util;
+
+public class Params {
+	
+}

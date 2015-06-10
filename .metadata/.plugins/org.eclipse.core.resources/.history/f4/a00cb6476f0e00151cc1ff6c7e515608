@@ -1,0 +1,63 @@
+package com.android.beez.api;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import android.content.Context;
+import android.os.AsyncTask;
+
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.beez.app.AppController;
+
+public abstract class BaseNewsSourceApiClient extends AsyncTask<String, Void, String> {
+	
+	//Attributes json 
+	protected String id_news;
+	protected String title;
+	protected String headline;
+	protected String url_headline_img;
+	
+	protected String origin_url;
+	protected String app_domain;
+	protected String cate_id;
+	
+	protected String short_link;
+	protected String time;
+	protected int view;
+	
+	public static String GET(String url){
+		InputStream inputStream = null;
+		String result = "";
+		try {
+			
+			// create HttpClient
+			HttpClient httpclient = new DefaultHttpClient();
+			
+			// make GET request to the given URL
+			HttpResponse httpResponse = httpclient.execute(new HttpGet(url));
+			
+			// receive response as inputStream
+			inputStream = httpResponse.getEntity().getContent();
+			
+			// convert inputstream to string
+			if(inputStream != null)
+				result = convertInputStreamToString(inputStream);
+			else
+				result = "Did not work!";
+		
+		} catch (Exception e) {
+			Log.d("InputStream", e.getLocalizedMessage());
+		}
+		
+		return result;
+	}
+	
+	@Override
+    protected String doInBackground(String... urls) {
+          
+        return GET(urls[0]);
+    }
+	
+	
+}

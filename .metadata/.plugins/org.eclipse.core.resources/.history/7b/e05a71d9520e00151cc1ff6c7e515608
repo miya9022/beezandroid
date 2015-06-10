@@ -1,0 +1,165 @@
+package com.music.arc.musicarc.ui;
+
+import android.app.Activity;
+import android.os.Handler;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.ad_stir.webview.AdstirMraidView;
+import com.vagolk.musicjay.R;
+import com.music.arc.musicarc.app.AppController;
+
+public class InterstitialAds {
+	public final static int DIALOG_TYPE_OK = 1;
+	public final static int DIALOG_TYPE_OK_CANCEL = 2;
+	
+	public interface OnInterstitialAdsEventListener{
+		public void OnAdsOKPressedListener();
+		public void OnAdsCancelPressedListener();
+	}
+	
+	private LayoutInflater inflater = null;
+	private Activity parentActivity;
+	private View view;
+	
+	private Button ok;
+	private Button cancel;
+	private TextView title;
+	private ViewGroup adsContent;
+	private OnInterstitialAdsEventListener eventListener;
+	
+	private String adsTitle;
+	private String okTitle;
+	private String cancelTitle;
+	private int dialogType = DIALOG_TYPE_OK_CANCEL;	
+
+	public InterstitialAds() {
+		
+	}
+	
+	public void setAdsTitle(String adsTitle){
+		this.adsTitle = adsTitle;
+	}
+	
+	public void show(Activity parent, int id){
+		this.parentActivity = parent;
+		this.eventListener = (OnInterstitialAdsEventListener)parent;
+		this.inflater = LayoutInflater.from(parent);
+		this.view = inflater.inflate(R.layout.interstitial_ads, null);
+		
+		parentActivity.addContentView(view, new LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT, 
+				ViewGroup.LayoutParams.MATCH_PARENT));
+		
+		this.ok = (Button)view.findViewById(R.id.btn_ok);
+		this.cancel = (Button)view.findViewById(R.id.btn_cancel);
+		this.adsContent = (ViewGroup)view.findViewById(R.id.ads_content);
+		this.title = (TextView)view.findViewById(R.id.ads_title);
+		if (adsTitle!=null){
+			this.title.setText(adsTitle);
+		}
+		
+		if (okTitle!=null && !"".equals(okTitle)){
+			this.ok.setText(okTitle);
+		}
+		
+		if (cancelTitle!=null && !"".equals(cancelTitle)){
+			this.cancel.setText(cancelTitle);
+		}
+		
+		if (this.dialogType == DIALOG_TYPE_OK){
+			
+			this.ok.setVisibility(View.GONE);
+			if (okTitle!=null && !"".equals(okTitle)){
+				this.cancel.setText(okTitle);
+			} else {
+				this.cancel.setText(parentActivity.getResources().getString(R.string.btn_accept));
+			}
+		}
+		
+		ok.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				eventListener.OnAdsOKPressedListener();
+				((ViewGroup)view.getParent()).removeView(view);	
+			}
+		});
+		
+		cancel.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				eventListener.OnAdsCancelPressedListener();
+				((ViewGroup)view.getParent()).removeView(view);				
+			}
+		});
+		
+		final View adsView = new AdstirMraidView(parentActivity, 
+													AppController.getInstance().getSystemProperties("astir_media_id"), 
+													id, 
+													AdstirMraidView.AdSize.Size300x250, 
+													AdstirMraidView.DEFAULT_INTERVAL);		
+		final LayoutParams params = adsContent.getLayoutParams();
+		
+		int height = (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 300, 
+				parentActivity.getResources().getDisplayMetrics());
+		params.width = height;
+		params.height = LayoutParams.WRAP_CONTENT;
+		
+		adsContent.setLayoutParams(params);
+		new Handler().postDelayed(new Runnable() {			
+			@Override
+			public void run() {
+				LayoutParams params = adsContent.getLayoutParams();
+				int height = (int) TypedValue.applyDimension(
+												TypedValue.COMPLEX_UNIT_DIP, 300, 
+												parentActivity.getResources().getDisplayMetrics());
+				params.width = height;
+				params.height = height;
+				adsContent.addView(adsView, 0, params);
+			}
+		}, 500);
+	}
+	
+	public View getView() {
+		return view;
+	}
+
+	public Activity getParentActivity() {
+		return parentActivity;
+	}
+
+	public void setParentActivity(Activity parentActivity) {
+		this.parentActivity = parentActivity;
+	}
+
+	public int getDialogType() {
+		return dialogType;
+	}
+
+	public void setDialogType(int dialogType) {
+		this.dialogType = dialogType;
+	}
+
+	public String getOkTitle() {
+		return okTitle;
+	}
+
+	public void setOkTitle(String okTitle) {
+		this.okTitle = okTitle;
+	}
+
+	public String getCancelTitle() {
+		return cancelTitle;
+	}
+
+	public void setCancelTitle(String cancelTitle) {
+		this.cancelTitle = cancelTitle;
+	}
+	
+}

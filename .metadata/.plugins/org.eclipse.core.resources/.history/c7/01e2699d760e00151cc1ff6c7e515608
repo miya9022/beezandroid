@@ -1,0 +1,12 @@
+package com.android.beez.api;
+
+import android.content.Context;
+
+public class NewsBeezApiClient extends BaseNewsSourceApiClient {
+
+	public NewsBeezApiClient(String baseUrl, String apiBaseUrl, Context ctx) {
+		super(baseUrl, apiBaseUrl);
+		
+	}
+	
+}

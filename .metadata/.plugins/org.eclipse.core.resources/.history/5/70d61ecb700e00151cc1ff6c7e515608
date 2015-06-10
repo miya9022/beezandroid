@@ -1,0 +1,6 @@
+package com.android.beez.api;
+
+public interface NewsSourceApiClient {
+	static final String ID  = "id";
+	static final String 
+}

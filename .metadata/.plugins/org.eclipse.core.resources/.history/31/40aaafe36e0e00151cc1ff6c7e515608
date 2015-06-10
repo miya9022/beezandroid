@@ -1,0 +1,18 @@
+package com.android.beez.api;
+
+public interface NewsSourceApiClient {
+	public final static int SOURCE_TYPE_XIAMI = 1;
+	public final static int SOURCE_TYPE_DOUMI = 2;
+	public final static int SOURCE_TYPE_MUSIC163 = 3;
+	public final static int SOURCE_TYPE_AUTO = 0;
+	
+	public final static int RANK_BILLBOARD = 2;
+	public final static int RANK_ORICON = 5;
+	public final static int RANK_SHRIMP = 101;
+	
+	public final static int RANK_WEEK = 1;
+	public final static int RANK_ALL = 2;
+	public final static int RANK_MONTH = 3;
+	public final static int RANK_YEAR = 4;
+	public final static String RANK_ALBUM = "newalbum";
+}

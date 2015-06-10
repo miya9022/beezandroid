@@ -1,0 +1,5 @@
+package com.android.beez.model;
+
+public class NewsBeez {
+	
+}

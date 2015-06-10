@@ -1,0 +1,10 @@
+package com.android.beez.api;
+
+public class NewsBeezApiClient extends BaseNewsSourceApiClient {
+
+	public NewsBeezApiClient(String baseUrl, String apiBaseUrl) {
+		super(baseUrl, apiBaseUrl);
+		
+	}
+	
+}

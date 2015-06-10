@@ -1,0 +1,12 @@
+package com.android.beez.model;
+
+import java.io.Serializable;
+
+public class NewsBeez implements Serializable {
+	public String id;
+	public String title;
+	public String headline;
+	public String headline_img;
+	
+	public String origin_url;
+}

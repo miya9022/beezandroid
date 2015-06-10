@@ -1,0 +1,262 @@
+package com.music.arc.musicarc.ui;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.provider.Settings.Global;
+import android.support.v4.content.IntentCompat;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.music.arc.musicarc.HistoryActivity;
+import com.music.arc.musicarc.PlaylistActivity;
+import com.vagolk.musicjay.R;
+import com.music.arc.musicarc.RankingActivity;
+import com.music.arc.musicarc.SearchActivity;
+
+public class Bottombar {
+	public final static int TAB_RANKING = 1;
+	public final static int TAB_HISTORY = 2;
+	public final static int TAB_PLAYLIST = 3;
+	public final static int TAB_SEARCH = 4;
+	
+	private static Bottombar instance = null;
+	private Activity parentActivity;
+	private View view;
+	private LinearLayout bottombar_bg;
+	private ImageButton ranking;
+	private ImageButton history;
+	private ImageButton playlist;
+	private ImageButton search;
+	
+	private static int activeTab = TAB_RANKING;
+
+	public static Bottombar getInstance() {
+		if (instance == null) {
+			instance = new Bottombar();
+		}
+
+		return instance;
+	}
+
+	private Bottombar() {
+	}
+
+	protected void onRankingClick(View v) {
+		activeTab = TAB_RANKING;		
+		try{
+			Intent intent = new Intent(parentActivity, RankingActivity.class);
+//			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//clear top and reset if it aready runn
+			parentActivity.startActivity(intent);
+			parentActivity.finish();
+			parentActivity.overridePendingTransition(0,0);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	protected void onHistoryClick(View v) {
+		activeTab = TAB_HISTORY;
+		try{
+			Intent intent = new Intent(parentActivity, HistoryActivity.class);
+			//intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//clear top and reset if it aready runn
+			parentActivity.startActivity(intent);
+			parentActivity.finish();
+			parentActivity.overridePendingTransition(0,0);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	protected void onPlaylistClick(View v) {
+		activeTab = TAB_PLAYLIST;
+		try{
+			Intent intent = new Intent(parentActivity, PlaylistActivity.class);
+			//intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//clear top and reset if it aready runn
+			parentActivity.startActivity(intent);
+			parentActivity.finish();
+			parentActivity.overridePendingTransition(0,0);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	protected void onSearchClick(View v) {
+		activeTab = TAB_SEARCH;
+		try{
+			Intent intent = new Intent(parentActivity, SearchActivity.class);
+			//intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//clear top and reset if it aready runn
+			parentActivity.startActivity(intent);
+			parentActivity.finish();
+			parentActivity.overridePendingTransition(0,0);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public void appendTo(Activity parentActivity, int resourceId) {
+		this.parentActivity = parentActivity;
+		
+		LayoutInflater inflater = (LayoutInflater) this.parentActivity
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.view = inflater.inflate(R.layout.bottombar, null);
+		bottombar_bg= (LinearLayout) this.view.findViewById(R.id.bottombar_bg);
+		ranking = (ImageButton) this.view.findViewById(R.id.bottombar_ranking);
+		ranking.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onRankingClick(v);
+			}
+		});
+
+		history = (ImageButton) this.view.findViewById(R.id.bottombar_history);
+		history.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onHistoryClick(v);
+			}
+		});
+
+		playlist = (ImageButton) this.view.findViewById(R.id.bottombar_playlist);
+		playlist.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onPlaylistClick(v);
+			}
+		});
+
+		search = (ImageButton) this.view.findViewById(R.id.bottombar_search);
+		search.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onSearchClick(v);
+			}
+		});
+		if (TAB_HISTORY == activeTab){		
+			bottombar_bg.setBackgroundResource(R.drawable.tab_menu3);
+			ranking.setImageResource(R.drawable.tab_ranking_inactive);
+			history.setImageResource(R.drawable.tab_history_active);
+			playlist.setImageResource(R.drawable.tab_playlist_inactive);
+			search.setImageResource(R.drawable.tab_search_inactive);
+			
+			((TextView)this.view.findViewById(R.id.bottombar_ranking_title))
+						.setTextColor(this.parentActivity.getResources().getColor(R.color.btn_text_bottombar));
+			((TextView)this.view.findViewById(R.id.bottombar_history_title))
+						.setTextColor(this.parentActivity.getResources().getColor(R.color.white));
+			((TextView)this.view.findViewById(R.id.bottombar_playlist_title))
+						.setTextColor(this.parentActivity.getResources().getColor(R.color.btn_text_bottombar));
+			((TextView)this.view.findViewById(R.id.bottombar_search_title))
+						.setTextColor(this.parentActivity.getResources().getColor(R.color.btn_text_bottombar));
+			
+		} else if (TAB_PLAYLIST == activeTab){
+			bottombar_bg.setBackgroundResource(R.drawable.tab_menu4);
+			ranking.setImageResource(R.drawable.tab_ranking_inactive);
+			history.setImageResource(R.drawable.tab_history_inactive);
+			playlist.setImageResource(R.drawable.tab_playlist_active);
+			search.setImageResource(R.drawable.tab_search_inactive);
+			
+			((TextView)this.view.findViewById(R.id.bottombar_ranking_title))
+						.setTextColor(this.parentActivity.getResources().getColor(R.color.btn_text_bottombar));
+			((TextView)this.view.findViewById(R.id.bottombar_history_title))
+						.setTextColor(this.parentActivity.getResources().getColor(R.color.btn_text_bottombar));
+			((TextView)this.view.findViewById(R.id.bottombar_playlist_title))
+						.setTextColor(this.parentActivity.getResources().getColor(R.color.white));
+			((TextView)this.view.findViewById(R.id.bottombar_search_title))
+						.setTextColor(this.parentActivity.getResources().getColor(R.color.btn_text_bottombar));
+		} else if (TAB_SEARCH == activeTab){
+			bottombar_bg.setBackgroundResource(R.drawable.tab_menu5);
+			ranking.setImageResource(R.drawable.tab_ranking_inactive);
+			history.setImageResource(R.drawable.tab_history_inactive);
+			playlist.setImageResource(R.drawable.tab_playlist_inactive);
+			search.setImageResource(R.drawable.tab_search_active);
+			
+			((TextView)this.view.findViewById(R.id.bottombar_ranking_title))
+						.setTextColor(this.parentActivity.getResources().getColor(R.color.btn_text_bottombar));
+			((TextView)this.view.findViewById(R.id.bottombar_history_title))
+						.setTextColor(this.parentActivity.getResources().getColor(R.color.btn_text_bottombar));
+			((TextView)this.view.findViewById(R.id.bottombar_playlist_title))
+						.setTextColor(this.parentActivity.getResources().getColor(R.color.btn_text_bottombar));
+			((TextView)this.view.findViewById(R.id.bottombar_search_title))
+						.setTextColor(this.parentActivity.getResources().getColor(R.color.white));			
+		} else {
+			bottombar_bg.setBackgroundResource(R.drawable.tab_menu2);
+			ranking.setImageResource(R.drawable.tab_ranking_active);
+			history.setImageResource(R.drawable.tab_history_inactive);
+			playlist.setImageResource(R.drawable.tab_playlist_inactive);
+			search.setImageResource(R.drawable.tab_search_inactive);
+			
+			((TextView)this.view.findViewById(R.id.bottombar_ranking_title))
+						.setTextColor(this.parentActivity.getResources().getColor(R.color.white));
+			((TextView)this.view.findViewById(R.id.bottombar_history_title))
+						.setTextColor(this.parentActivity.getResources().getColor(R.color.btn_text_bottombar));
+			((TextView)this.view.findViewById(R.id.bottombar_playlist_title))
+						.setTextColor(this.parentActivity.getResources().getColor(R.color.btn_text_bottombar));
+			((TextView)this.view.findViewById(R.id.bottombar_search_title))
+						.setTextColor(this.parentActivity.getResources().getColor(R.color.btn_text_bottombar));
+		}
+
+		ViewGroup view = (ViewGroup) this.parentActivity
+				.findViewById(resourceId);
+		view.addView(this.view);
+	}
+
+	public ImageButton getRanking() {
+		return ranking;
+	}
+
+	public void setRanking(ImageButton ranking) {
+		this.ranking = ranking;
+	}
+
+	public ImageButton getHistory() {
+		return history;
+	}
+
+	public void setHistory(ImageButton history) {
+		this.history = history;
+	}
+
+	public ImageButton getPlaylist() {
+		return playlist;
+	}
+
+	public void setPlaylist(ImageButton playlist) {
+		this.playlist = playlist;
+	}
+
+	public ImageButton getSearch() {
+		return search;
+	}
+
+	public void setSearch(ImageButton search) {
+		this.search = search;
+	}
+
+	public void setView(View view) {
+		this.view = view;
+	}
+
+	public View getView() {
+		return view;
+	}
+
+	public Activity getParentActivity() {
+		return parentActivity;
+	}
+
+	public void setParentActivity(Activity parentActivity) {
+		this.parentActivity = parentActivity;
+	}
+
+	public int getActiveTab() {
+		return activeTab;
+	}	
+}

@@ -1,0 +1,8 @@
+package com.android.beez.model;
+
+import java.io.Serializable;
+
+public class NewsBeez implements Serializable {
+	public String id;
+	public String title;
+}
