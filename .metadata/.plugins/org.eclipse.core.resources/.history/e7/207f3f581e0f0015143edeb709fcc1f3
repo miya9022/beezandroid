@@ -1,0 +1,7 @@
+package com.android.beez.api;
+
+public class NewsBeezApiClient {
+	protected String baseUrl;
+	protected String apiBaseUrl;
+	protected Context context;
+}

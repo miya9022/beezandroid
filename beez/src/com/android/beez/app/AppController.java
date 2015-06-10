@@ -26,11 +26,12 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
+import com.android.beez.NewsPlayer;
 import com.android.beez.R;
 import com.android.beez.api.*;
 import com.android.beez.db.BeezDatabase;
-import com.News.arc.Newsarc.loadimage.ImageCache;
-import com.News.arc.Newsarc.loadimage.ImageFetcher;
+import com.android.beez.loadimage.ImageCache;
+import com.android.beez.loadimage.ImageFetcher;
 import com.android.beez.model.NewsBeez;
 
 
@@ -38,9 +39,9 @@ public class AppController extends Application {
 	
 	static final String TAG = AppController.class.toString();
 	
-	public static final String CREATE_NEWS_TABLE = "CREATE TABLE NEWS(ID INTEGER, PLAYLIST_ID INTEGER, NEWS_ID VARCHAR(20), TITLE VARCHAR(200), HEADLINE VARCHAR(200), HEADLINE_IMG VARCHAR(200), ORIGIN_URL VARCHAR(300), APP_DOMAIN VARCHAR(300), PRIMARY KEY(ID))";
-	public static final String CREATE_HISTORY = "CREATE TABLE HISTORY(ID INTEGER, PLAYLIST_ID INTEGER, SONG_ID VARCHAR(20), TITLE VARCHAR(200), ARTIST VARCHAR(200), COVER VARCHAR(200), URL VARCHAR(300), ALBUM_ID VARCHAR(300), TIMESTAMP DATETIME DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY(ID))";
-	public static final String CREATE_DISPLAYLIST_TABLE = "CREATE TABLE DISPLAYLIST(ID INTEGER, TITLE VARCHAR(200), PRIMARY KEY(ID))";
+	public static final String CREATE_NEWS_TABLE = "CREATE TABLE NEWS_BEEZ(ID INTEGER, NEWS_ID VARCHAR(20), TITLE VARCHAR(200), HEADLINE VARCHAR(400), "
+			+ "HEADLINE_IMG VARCHAR(400), ORIGIN_URL VARCHAR(200), APP_DOMAIN VARCHAR(200), CATE_ID VARCHAR(200), SHORT_LINK VARCHAR(200), "
+			+ "TIME VARCHAR(200), VIEW INTEGER, PRIMARY KEY(ID))";
 	
 	//public static final String MSG_SHARE_FB = "ã€�News Arcã€‘ç„¡æ–™ã�§éŸ³æ¥½ã�Œè�´ã��æ”¾é¡Œã�®ã‚¢ãƒ—ãƒªï¼�ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã�—ã�¦ã€�ä½¿ã�£ã�¦ã�¿ã�¦ã�­â™ª\n {DOWNLOAD_URL}";
 //	public static final String MSG_SHARE_LINE = "ã€�News Arcã€‘ç„¡æ–™ã�§éŸ³æ¥½ã�Œè�´ã��æ”¾é¡Œã�®ã‚¢ãƒ—ãƒªï¼�ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã�—ã�¦ã€�ä½¿ã�£ã�¦ã�¿ã�¦ã�­â™ª\n {DOWNLOAD_URL}";
@@ -76,13 +77,8 @@ public class AppController extends Application {
 	private BeezDatabase database;
 	
 	private ImageFetcher imageFetcher;
-	private NewsPlayer NewsPlayer;
+	private NewsPlayer newsPlayer;
 	private Map<String, Object> sharedPreference;
-	
-	/**
-	 * All favorited song list
-	 */
-	private Map<String, SongModel> favoritedSongs;
 	
 	/**
 	 * Common use Progress dialog
@@ -105,15 +101,13 @@ public class AppController extends Application {
 		String dbName = properties.getProperty("db_name");
 		
 		// initialize Api client
-		NewsApiClient = new NewsXiamiApiClient(baseUrl, apiBaseUrl,getApplicationContext());
+		NewsApiClient = new NewsBeezApiClient(baseUrl, apiBaseUrl,getApplicationContext());
 		
 		// initialize database
 		ArrayList<String> tables = new ArrayList<String>(){
 			private static final long serialVersionUID = 1L;
 			{
-				add(CREATE_DISPLAYLIST_TABLE);
 				add(CREATE_NEWS_TABLE);
-				add(CREATE_HISTORY);
 			}
 		};
 		database = new BeezDatabase(getApplicationContext(), dbName);
@@ -128,9 +122,6 @@ public class AppController extends Application {
 		
 		// initialize in-app shared preference
 		sharedPreference = new HashMap<String, Object>();
-		
-		// initialize all favorited songs
-		favoritedSongs = database.getAllFavoritedSongs();
 				
 		// initlialize the singleton
 		instance = this;
@@ -139,7 +130,7 @@ public class AppController extends Application {
 		//update all share link. we can change version and link  any time, so update every time open app
 //		if (!shared.contains("facebook_share_url")){
 			final Editor editor = shared.edit();			
-			((NewsXiamiApiClient)NewsApiClient).getSNSShareURL(new Response.Listener<String>(){
+			((NewsBeezApiClient)NewsApiClient).getSNSShareURL(new Response.Listener<String>(){
 				@Override
 				public void onResponse(String data) {				
 					try{
@@ -172,9 +163,6 @@ public class AppController extends Application {
 				}
 			});
 //		}
-	}
-	public void  updateFavariteSongs() {
-		favoritedSongs = database.getAllFavoritedSongs();
 	}
 	/**
 	 * Load system.properties in assets directory
@@ -266,15 +254,15 @@ public class AppController extends Application {
     }
     
     public NewsSourceApiClient getNewsApiClient(){
-    	return newsApiClient;
+    	return NewsApiClient;
     }
     
     public NewsSourceApiClient getNewsApiClient(int sourceType){
     	String baseUrl = properties.getProperty("base_url");
     	String apiBaseUrl = properties.getProperty("api_base_url");		
 		
-    	if (NewsSourceApiClient.SOURCE_TYPE_XIAMI == sourceType){
-    		newsApiClient = new NewsXiamiApiClient(baseUrl, apiBaseUrl,getApplicationContext());
+    	if (BaseNewsSourceApiClient.SOURCE_TYPE_BEEZ == sourceType){
+    		NewsApiClient = new NewsBeezApiClient(baseUrl, apiBaseUrl,getApplicationContext());
     	}
     	return NewsApiClient;
     }
@@ -284,10 +272,10 @@ public class AppController extends Application {
 	}
 
 	public NewsPlayer getNewsPlayer() {
-		if (NewsPlayer == null){
-			NewsPlayer = new NewsPlayer(getApplicationContext());			
+		if (newsPlayer == null){
+			newsPlayer = new NewsPlayer(getApplicationContext());			
 		}
-		return NewsPlayer;
+		return newsPlayer;
 	}
 
 	public Map<String, Object> getSharedMem() {
@@ -297,7 +285,7 @@ public class AppController extends Application {
 		return sharedPreference;
 	}
 
-	public NewsarcDatabase getDatabase() {
+	public BeezDatabase getDatabase() {
 		return database;
 	}
 		
@@ -421,9 +409,9 @@ public class AppController extends Application {
 				.setFatal(true).build());
 	}
 	
-	public int countSongsOfPlaylist(){		
-		return database.countSongsOfPlaylist();
-	}
+//	public int countSongsOfPlaylist(){		
+//		return database.countSongsOfPlaylist();
+//	}
 
 //	public void notifyFavoriteChanged(){
 //		favoritedSongs = database.getAllFavoritedSongs();		

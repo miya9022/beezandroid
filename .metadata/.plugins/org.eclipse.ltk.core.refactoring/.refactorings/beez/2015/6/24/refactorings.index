@@ -9,3 +9,6 @@
 1433834693281	Rename package 'com.android.beez.util'
 1433834822605	Rename type 'NewsBeezz'
 1433839790773	Rename type 'MusicarcDatabase'
+1433904211757	Delete element
+1433909881134	Rename type 'NewsDisplayer'
+1433911537630	Rename type 'NewsSourceApiClient'

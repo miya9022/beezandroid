@@ -1,0 +1,32 @@
+package com.android.beez;
+
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver.OnScrollChangedListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+
+public class NewsDisplayer implements OnItemClickListener, OnScrollChangedListener, OnCompletionListener {
+
+	@Override
+	public void onScrollChanged() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCompletion(MediaPlayer mp) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}
