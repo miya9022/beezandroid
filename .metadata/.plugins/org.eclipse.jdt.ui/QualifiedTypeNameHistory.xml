@@ -3,7 +3,6 @@
 <fullyQualifiedTypeName name="com.android.beez.R"/>
 <fullyQualifiedTypeName name="com.android.beez.MenuActivity"/>
 <fullyQualifiedTypeName name="android.support.v7.app.ActionBarActivity"/>
-<fullyQualifiedTypeName name="android.content.Context"/>
 <fullyQualifiedTypeName name="android.os.AsyncTask"/>
 <fullyQualifiedTypeName name="java.io.InputStream"/>
 <fullyQualifiedTypeName name="org.apache.http.client.HttpClient"/>
@@ -19,4 +18,19 @@
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.view.ViewTreeObserver.OnScrollChangedListener"/>
 <fullyQualifiedTypeName name="android.support.v7.internal.widget.AdapterViewCompat.OnItemClickListener"/>
+<fullyQualifiedTypeName name="android.widget.AdapterView.OnItemClickListener"/>
+<fullyQualifiedTypeName name="android.media.MediaPlayer.OnCompletionListener"/>
+<fullyQualifiedTypeName name="com.handmark.pulltorefresh.library.PullToRefreshListView"/>
+<fullyQualifiedTypeName name="android.widget.ListView"/>
+<fullyQualifiedTypeName name="java.security.MessageDigest"/>
+<fullyQualifiedTypeName name="java.security.NoSuchAlgorithmException"/>
+<fullyQualifiedTypeName name="com.android.volley.Response"/>
+<fullyQualifiedTypeName name="com.android.volley.toolbox.StringRequest"/>
+<fullyQualifiedTypeName name="com.android.beez.app.AppController"/>
+<fullyQualifiedTypeName name="com.android.beez.api.NewsSourceApiClient"/>
+<fullyQualifiedTypeName name="android.widget.AdapterView"/>
+<fullyQualifiedTypeName name="com.android.beez.ui.Actionbar"/>
+<fullyQualifiedTypeName name="android.widget.Button"/>
+<fullyQualifiedTypeName name="com.android.beez.NewsPlayer"/>
+<fullyQualifiedTypeName name="android.content.Context"/>
 </qualifiedTypeNameHistroy>

@@ -13,8 +13,6 @@ public class NewsBeezApiClient extends BaseNewsSourceApiClient {
 
 	public NewsBeezApiClient(String baseUrl, String apiBaseUrl, Context ctx) {
 		super(baseUrl, apiBaseUrl);
-		// TODO Auto-generated constructor stub
-		this.sourceType = 1;
 		this.context = ctx;
 	}
 		

@@ -26,7 +26,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
-import com.android.beez.NewsPlayer;
+
 import com.android.beez.R;
 import com.android.beez.api.*;
 import com.android.beez.db.BeezDatabase;
@@ -64,7 +64,7 @@ public class AppController extends Application {
 	/**
 	 * Global Beez API client
 	 */
-	private NewsSourceApiClient NewsApiClient;
+	private BaseNewsSourceApiClient NewsApiClient;
 	
 	/**
 	 * Global Internet connection state detector 
@@ -77,7 +77,6 @@ public class AppController extends Application {
 	private BeezDatabase database;
 	
 	private ImageFetcher imageFetcher;
-	private NewsPlayer newsPlayer;
 	private Map<String, Object> sharedPreference;
 	
 	/**
@@ -253,29 +252,19 @@ public class AppController extends Application {
         }
     }
     
-    public NewsSourceApiClient getNewsApiClient(){
+    public BaseNewsSourceApiClient getNewsApiClient(){
     	return NewsApiClient;
     }
     
-    public NewsSourceApiClient getNewsApiClient(int sourceType){
+    public BaseNewsSourceApiClient getNewsApiClient(int sourceType){
     	String baseUrl = properties.getProperty("base_url");
     	String apiBaseUrl = properties.getProperty("api_base_url");		
-		
-    	if (BaseNewsSourceApiClient.SOURCE_TYPE_BEEZ == sourceType){
-    		NewsApiClient = new NewsBeezApiClient(baseUrl, apiBaseUrl,getApplicationContext());
-    	}
+    	NewsApiClient = new NewsBeezApiClient(baseUrl, apiBaseUrl,getApplicationContext());
     	return NewsApiClient;
     }
 
 	public ImageFetcher getImageFetcher() {
 		return imageFetcher;
-	}
-
-	public NewsPlayer getNewsPlayer() {
-		if (newsPlayer == null){
-			newsPlayer = new NewsPlayer(getApplicationContext());			
-		}
-		return newsPlayer;
 	}
 
 	public Map<String, Object> getSharedMem() {
@@ -289,80 +278,80 @@ public class AppController extends Application {
 		return database;
 	}
 		
-	public int decreasePlaylistAvailable(){
-		SharedPreferences shared = getSharedPreferences("Newsarc_playing_options", MODE_PRIVATE);
-		Editor editor = shared.edit();
-		
-		int default_quota = Integer.valueOf(properties.getProperty("playlist_quota", String.valueOf(100)));
-		int quota = shared.getInt("playlist_available", default_quota);
-				
-		if (quota > 0){
-			quota--;
-		} 
-				
-		editor.putInt("playlist_available", quota);
-		editor.commit();
-		
-		return quota;
-	}
-	
-	public int increasePlaylistAvailable(){
-		SharedPreferences shared = getSharedPreferences("Newsarc_playing_options", MODE_PRIVATE);
-		Editor editor = shared.edit();
-		
-		int default_quota = getDisplayQuota();
-		int quota = shared.getInt("playlist_available", default_quota);
-		
-		editor.putInt("playlist_available", ++quota);
-		editor.commit();
-		
-		return quota;
-	}
-	public void increasePlaylistAvailable(int num){
-		SharedPreferences shared = getSharedPreferences("Newsarc_playing_options", MODE_PRIVATE);
-		Editor editor = shared.edit();
-		
-		int default_quota = getDisplayQuota();
-		int quota = shared.getInt("playlist_available", default_quota);
-		
-		editor.putInt("playlist_available", quota+num);
-		editor.commit();
-	}
-	
-	public int increasePlaylistAvailableBySharing(){
-		SharedPreferences shared = getSharedPreferences("Newsarc_playing_options", MODE_PRIVATE);
-		Editor editor = shared.edit();
-		
-		int default_quota = getDisplayQuota();
-		int quota = shared.getInt("playlist_available", default_quota);		
-		int inc = Integer.valueOf(properties.getProperty("share_to_increase", String.valueOf(default_quota)));
-		
-		quota = quota + inc;
-		
-		editor.putInt("playlist_available", quota);
-		editor.commit();
-		
-		return quota;
-	}
+//	public int decreasePlaylistAvailable(){
+//		SharedPreferences shared = getSharedPreferences("Newsarc_playing_options", MODE_PRIVATE);
+//		Editor editor = shared.edit();
+//		
+//		int default_quota = Integer.valueOf(properties.getProperty("playlist_quota", String.valueOf(100)));
+//		int quota = shared.getInt("playlist_available", default_quota);
+//				
+//		if (quota > 0){
+//			quota--;
+//		} 
+//				
+//		editor.putInt("playlist_available", quota);
+//		editor.commit();
+//		
+//		return quota;
+//	}
+//	
+//	public int increasePlaylistAvailable(){
+//		SharedPreferences shared = getSharedPreferences("Newsarc_playing_options", MODE_PRIVATE);
+//		Editor editor = shared.edit();
+//		
+//		int default_quota = getDisplayQuota();
+//		int quota = shared.getInt("playlist_available", default_quota);
+//		
+//		editor.putInt("playlist_available", ++quota);
+//		editor.commit();
+//		
+//		return quota;
+//	}
+//	public void increasePlaylistAvailable(int num){
+//		SharedPreferences shared = getSharedPreferences("Newsarc_playing_options", MODE_PRIVATE);
+//		Editor editor = shared.edit();
+//		
+//		int default_quota = getDisplayQuota();
+//		int quota = shared.getInt("playlist_available", default_quota);
+//		
+//		editor.putInt("playlist_available", quota+num);
+//		editor.commit();
+//	}
+//	
+//	public int increasePlaylistAvailableBySharing(){
+//		SharedPreferences shared = getSharedPreferences("Newsarc_playing_options", MODE_PRIVATE);
+//		Editor editor = shared.edit();
+//		
+//		int default_quota = getDisplayQuota();
+//		int quota = shared.getInt("playlist_available", default_quota);		
+//		int inc = Integer.valueOf(properties.getProperty("share_to_increase", String.valueOf(default_quota)));
+//		
+//		quota = quota + inc;
+//		
+//		editor.putInt("playlist_available", quota);
+//		editor.commit();
+//		
+//		return quota;
+//	}
 	
 	private int getDisplayQuota(){
-		return Integer.valueOf(properties.getProperty("display_quota", String.valueOf(100)));
+		return Integer.valueOf(properties.getProperty("display_quota", String.valueOf(20)));
 	}
 	
-	public int getPlaylistAvailable(){
-		SharedPreferences shared = getSharedPreferences("Newsarc_playing_options", MODE_PRIVATE);				
-		int default_quota = getDisplayQuota();
-		int quota = shared.getInt("playlist_available", default_quota);
-		return quota;
-	}
-	
+//	public int getPlaylistAvailable(){
+//		SharedPreferences shared = getSharedPreferences("Newsarc_playing_options", MODE_PRIVATE);				
+//		int default_quota = getDisplayQuota();
+//		int quota = shared.getInt("playlist_available", default_quota);
+//		return quota;
+//	}
+//	
 	public SharedPreferences getSharedPreferences(){
 		return getSharedPreferences("Newsarc_playing_options", MODE_PRIVATE);
 	}
-	
-	private int getDisplaylistQuota(){
-		return Integer.valueOf(properties.getProperty("playlist_quota", String.valueOf(100)));
-	}
+//	
+//	private int getDisplaylistQuota(){
+//		return Integer.valueOf(properties.getProperty("playlist_quota", String.valueOf(100)));
+//	}
 	
 	public int getHistoryQuota(){
 		return Integer.valueOf(properties.getProperty("history_quota", String.valueOf(50)));

@@ -9,21 +9,10 @@ import com.android.beez.app.AppController;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
-public abstract class BaseNewsSourceApiClient implements NewsSourceApiClient {
-	protected int sourceType = SOURCE_TYPE_AUTO;	
+public abstract class BaseNewsSourceApiClient {
 	protected String baseUrl;
 	protected String apiBaseUrl;
 	protected Context context;
-	
-	public int getSourceType() {
-		return sourceType;
-	}
-
-
-
-	public void setSourceType(int sourceType) {
-		this.sourceType = sourceType;
-	}
 	
 	public String getBaseUrl() {
 		return baseUrl;
@@ -82,13 +71,6 @@ public abstract class BaseNewsSourceApiClient implements NewsSourceApiClient {
 			e.printStackTrace();
 		}
 		return "";
-	}
-	
-	public BaseNewsSourceApiClient(int sourceType, String baseUrl, String apiBaseUrl) {
-		super();
-		this.sourceType = sourceType;
-		this.baseUrl = baseUrl;
-		this.apiBaseUrl = apiBaseUrl;		
 	}
 	
 	public BaseNewsSourceApiClient(String baseUrl, String apiBaseUrl) {

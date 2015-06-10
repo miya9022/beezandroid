@@ -13,9 +13,6 @@
 			<accessrule kind="nonaccessible" pattern="com/android/internal/**"/>
 		</accessrules>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Codelovers/beezandroid/beez/libs/adstirwebview.jar"/>
-	<classpathentry kind="lib" path="D:/Codelovers/beezandroid/beez/libs/google-play-services.jar"/>
-	<classpathentry kind="lib" path="D:/Codelovers/beezandroid/beez/libs/google-play-services_lib.jar"/>
-	<classpathentry kind="lib" path="D:/Codelovers/beezandroid/beez/libs/volley.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/android-support-v7-appcompat"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

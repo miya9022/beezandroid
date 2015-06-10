@@ -2,15 +2,6 @@
 <resources>
 
     <string name="app_name">Music Jay</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_splash">Music Arc</string>
-    <string name="title_activity_ranking">ランキング</string>
-    <string name="title_activity_search">検索</string>
-    <string name="title_activity_history">再生履歴</string>
-    <string name="title_activity_playlist">プレイリスト</string>
-    <string name="title_activity_player">再生再生</string>
-    <string name="title_activity_playlist_songs">プレイリストの曲</string>
-    <string name="title_activity_invite">友達招待</string>
 
     <!-- General button labels -->
     <string name="btn_cancel">キャンセル</string>
@@ -98,5 +89,6 @@
     <string name="share_text">無料で音楽が楽しめるMusic Arc！目を閉じて、ゆっくりと音楽を聞いてみて。ダウンロードをしてみよう！\n %s</string>
     <string name="warning_change_song">%s is loading.\n Please wait few second and retry</string>
     <string name="title_activity_view_content">ViewContentActivity</string>
+    <string name="title_activity_news_list">NewsListActivity</string>
 
 </resources>

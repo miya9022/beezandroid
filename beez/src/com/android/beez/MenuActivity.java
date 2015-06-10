@@ -25,45 +25,9 @@ public class MenuActivity extends ActionBarActivity implements InterstitialAds.O
 	public   String TAG = MenuActivity.class.getSimpleName();
 	protected InterstitialAds ads = null;
 	
-	private PullToRefreshListView listView;
-	private Button loadMore;
-	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
-        Slidemenu.getInstance().clearMenuActivity(this);
-        listView = (PullToRefreshListView)findViewById(R.id.listview);
-        listView.getRefreshableView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				
-				
-			}
-        	
-        });
-        
-        listView.setOnRefreshListener(new OnRefreshListener<ListView>() {
-			@Override
-			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-				
-			}
-        });
-        loadMore = new Button(this);
-        loadMore.setText(R.string.btn_more);
-		loadMore.setBackgroundColor(getResources().getColor(
-				R.color.btn_background));
-		loadMore.setTextColor(getResources().getColor(R.color.white));
-		loadMore.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				
-			}
-		});
-        listView.getRefreshableView().addFooterView(loadMore);
         AppController.getInstance().trackScreen(getClass().getSimpleName());
 		AppController.getInstance().checkInternet();
     }

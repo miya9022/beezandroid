@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Music Jay</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_splash">Music Arc</string>
+    <string name="title_activity_ranking">ランキング</string>
+    <string name="title_activity_search">検索</string>
+    <string name="title_activity_history">再生履歴</string>
+    <string name="title_activity_playlist">プレイリスト</string>
+    <string name="title_activity_player">再生再生</string>
+    <string name="title_activity_playlist_songs">プレイリストの曲</string>
+    <string name="title_activity_invite">友達招待</string>
+
+    <!-- General button labels -->
+    <string name="btn_cancel">キャンセル</string>
+    <string name="btn_accept">確定</string>
+    <string name="btn_play">再生</string>
+    <string name="btn_del">削除</string>
+    <string name="btn_add">追加</string>
+    <string name="btn_edit">編集</string>
+    <string name="btn_update">更新</string>
+    <string name="btn_back">戻る</string>
+    <string name="btn_more">もっと見る</string>
+    <string name="btn_more_artist">もっとアーティストを見る</string>
+    <string name="btn_more_song">もっと曲を見る</string>
+
+    <!-- General notification/confirmation etc messages -->
+    <string name="msg_confirm_close_app">アプリを終了しますか？</string>
+    <string name="msg_now_loading">読み込み中…</string>
+    <string name="msg_invite_friend">友達を招待すると、【１００曲】の保存が増えるよ♪アイコンをクリックするだけで保存曲が増える♪友達にこのアプリを紹介してね♪</string>
+
+    <!-- Error messages -->
+    <string name="msg_no_network_connection_toast">接続されていません</string>
+    <string name="msg_no_line_installed">LINEがインストールされていません</string>
+    <string name="msg_no_facebook_installed">Facebookがインストールされていません</string>
+    <string name="msg_no_twitter_installed">Twitterがインストールされていません</string>
+
+    <!-- Sliding menu -->
+    <string name="title_slide_menu">メニュー</string>
+
+    <!-- Playlist dialog -->
+    <string name="title_add_to_playlist">プレイリストに加える</string>
+    <string name="playlist_default_title">プレイリスト１</string>
+    <string name="msg_quota_reached">プレイリストの上限です。「友達招待」で１００曲増やそう！</string>
+    <string name="msg_playlist_existed">すでにプレイリスト名があります。</string>
+    <string name="msg_playlist_confirm_removing">プレイリストを削除しますか？</string>
+
+    <!-- Player activity -->
+    <string-array name="sleep_array">
+        <item>10 分</item>
+        <item>20 分</item>
+        <item>30 分</item>
+        <item>40 分</item>
+        <item>50 分</item>
+        <item>60 分</item>
+        <item>70 分</item>
+        <item>80 分</item>
+        <item>90 分</item>
+        <item>100 分</item>
+        <item>110 分</item>
+        <item>120 分</item>
+    </string-array>
+
+    <string name="current_time_default_text">00:00</string>
+    <string name="title_choose_time">時間を選択する</string>
+
+    <!-- Ranking activity -->
+    <string name="tab_rank_single">シングル</string>
+    <string name="tab_rank_album">アルバム</string>
+    <string name="tab_rank_artist">アーティスト</string>
+
+    <!-- Playlist activity -->
+    <string name="btn_create_playlist">新規プレイリストを作る</string>
+    <string name="btn_edit_playlist">プレイリスト編集</string>
+    <string name="playlist_quota">保存上限曲数：%1d曲</string>
+    <string name="num_of_songs">%1d曲</string>
+
+    <!-- Search activity -->
+    <string name="search_input_hint">検索ワードを入力</string>
+    <string name="tab_search_all">すべて</string>
+    <string name="tab_search_single">シングル</string>
+    <string name="tab_search_album">アルバム</string>
+    <string name="tab_search_artist">アーティスト</string>
+
+    <!-- Bottombar in all screens -->
+    <string name="bottombar_ranking">ランキング</string>
+    <string name="bottombar_history">再生履歴</string>
+    <string name="bottombar_playlist">プレイリスト</string>
+    <string name="bottombar_search">検索</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="OK">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="update_version_title">アプリ更新</string>
+    <string name="update_version_warning">アプリが更新されました。</string>
+    <string name="share_fb_help">\n\nFBシェア画面にペストしてください!</string>
+    <string name="share_text">無料で音楽が楽しめるMusic Arc！目を閉じて、ゆっくりと音楽を聞いてみて。ダウンロードをしてみよう！\n %s</string>
+    <string name="warning_change_song">%s is loading.\n Please wait few second and retry</string>
+    <string name="title_activity_view_content">ViewContentActivity</string>
+    <string name="title_activity_news_list">NewsListActivity</string>
+
+</resources>
