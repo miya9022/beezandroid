@@ -247,37 +247,37 @@ public class Slidemenu implements OnItemClickListener {
 						.findViewById(R.id.slidingmenu_item_text);
 				holder.image = (ImageView) view
 						.findViewById(R.id.slidingmenu_item_thumb);
-				holder.toggle = (ToggleButton) view
-						.findViewById(R.id.slidingmenu_item_toggle);
-				holder.check = (CheckBox) view
-						.findViewById(R.id.slidingmenu_item_check);
+//				holder.toggle = (ToggleButton) view
+//						.findViewById(R.id.slidingmenu_item_toggle);
+//				holder.check = (CheckBox) view
+//						.findViewById(R.id.slidingmenu_item_check);
 
-				if (item.getType() == MenuItem.TYPE_TOGGLE) {
-					holder.toggle.setVisibility(View.VISIBLE);
-					holder.check.setVisibility(View.GONE);
-					holder.toggle
-							.setOnClickListener(new View.OnClickListener() {
-								@Override
-								public void onClick(View v) {
-									boolean val = ((ToggleButton) v)
-											.isChecked();
-
-									SharedPreferences shared = AppController
-											.getInstance()
-											.getSharedPreferences();
-									Editor e = shared.edit();
-									e.putBoolean(((ToggleButton) v).getTag()
-											.toString(), val);
-									e.commit();
-								}
-							});
-				} else if (item.getType() == MenuItem.TYPE_CHECK) {
-					holder.toggle.setVisibility(View.GONE);
-					holder.check.setVisibility(View.VISIBLE);
-				} else {
-					holder.toggle.setVisibility(View.GONE);
-					holder.check.setVisibility(View.GONE);
-				}
+//				if (item.getType() == MenuItem.TYPE_TOGGLE) {
+//					holder.toggle.setVisibility(View.VISIBLE);
+//					holder.check.setVisibility(View.GONE);
+//					holder.toggle
+//							.setOnClickListener(new View.OnClickListener() {
+//								@Override
+//								public void onClick(View v) {
+//									boolean val = ((ToggleButton) v)
+//											.isChecked();
+//
+//									SharedPreferences shared = AppController
+//											.getInstance()
+//											.getSharedPreferences();
+//									Editor e = shared.edit();
+//									e.putBoolean(((ToggleButton) v).getTag()
+//											.toString(), val);
+//									e.commit();
+//								}
+//							});
+//				} else if (item.getType() == MenuItem.TYPE_CHECK) {
+//					holder.toggle.setVisibility(View.GONE);
+//					holder.check.setVisibility(View.VISIBLE);
+//				} else {
+//					holder.toggle.setVisibility(View.GONE);
+//					holder.check.setVisibility(View.GONE);
+//				}
 
 				view.setTag(holder);
 			} else {
@@ -290,17 +290,17 @@ public class Slidemenu implements OnItemClickListener {
 			holder.image.setBackgroundResource(item.getThumbIcon());
 			holder.image.setTag(item.getTag());
 
-			SharedPreferences shared = AppController.getInstance()
-					.getSharedPreferences();
-			if (item.getType() == MenuItem.TYPE_TOGGLE) {
-				holder.toggle
-						.setChecked(shared.getBoolean(item.getTag(), true));
-				holder.toggle.setTag(item.getTag());
-			} else if (item.getType() == MenuItem.TYPE_CHECK) {
-				holder.check
-						.setSelected(shared.getBoolean(item.getTag(), true));
-				holder.check.setTag(item.getTag());
-			}
+//			SharedPreferences shared = AppController.getInstance()
+//					.getSharedPreferences();
+//			if (item.getType() == MenuItem.TYPE_TOGGLE) {
+//				holder.toggle
+//						.setChecked(shared.getBoolean(item.getTag(), true));
+//				holder.toggle.setTag(item.getTag());
+//			} else if (item.getType() == MenuItem.TYPE_CHECK) {
+//				holder.check
+//						.setSelected(shared.getBoolean(item.getTag(), true));
+//				holder.check.setTag(item.getTag());
+//			}
 
 			return view;
 		}
@@ -309,7 +309,7 @@ public class Slidemenu implements OnItemClickListener {
 	private static class SlidingmenuItemHolder {
 		TextView text;
 		ImageView image;
-		ToggleButton toggle;
+//		ToggleButton toggle;
 		CheckBox check;
 	}
 }

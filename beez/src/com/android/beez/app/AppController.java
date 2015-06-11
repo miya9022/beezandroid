@@ -12,6 +12,8 @@ import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -26,13 +28,13 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
-
 import com.android.beez.R;
 import com.android.beez.api.*;
 import com.android.beez.db.BeezDatabase;
 import com.android.beez.loadimage.ImageCache;
 import com.android.beez.loadimage.ImageFetcher;
 import com.android.beez.model.NewsBeez;
+import com.android.beez.utils.Params;
 
 
 public class AppController extends Application {
@@ -64,7 +66,7 @@ public class AppController extends Application {
 	/**
 	 * Global Beez API client
 	 */
-	private BaseNewsSourceApiClient NewsApiClient;
+	private NewsSourceApiClient NewsApiClient;
 	
 	/**
 	 * Global Internet connection state detector 
@@ -109,6 +111,9 @@ public class AppController extends Application {
 				add(CREATE_NEWS_TABLE);
 			}
 		};
+//		ArrayList<com.android.beez.model.NewsBeez> nb = new ArrayList<com.android.beez.model.NewsBeez>();
+//        nb = com.android.beez.utils.JSONHelper.parseJSONNewsBeez(apiBaseUrl+Params.LISTPOST);
+		
 		database = new BeezDatabase(getApplicationContext(), dbName);
 		database.createDb(tables);
 		
@@ -118,6 +123,7 @@ public class AppController extends Application {
 		imageFetcher = new ImageFetcher(this, 500);
 		imageFetcher.addImageCache(null, cacheParams);
 		imageFetcher.setImageFadeIn(false);
+		imageFetcher.setLoadingImage(R.drawable.ic_logo);
 		
 		// initialize in-app shared preference
 		sharedPreference = new HashMap<String, Object>();
@@ -252,11 +258,11 @@ public class AppController extends Application {
         }
     }
     
-    public BaseNewsSourceApiClient getNewsApiClient(){
+    public NewsSourceApiClient getNewsApiClient(){
     	return NewsApiClient;
     }
     
-    public BaseNewsSourceApiClient getNewsApiClient(int sourceType){
+    public NewsSourceApiClient getNewsApiClient(int sourceType){
     	String baseUrl = properties.getProperty("base_url");
     	String apiBaseUrl = properties.getProperty("api_base_url");		
     	NewsApiClient = new NewsBeezApiClient(baseUrl, apiBaseUrl,getApplicationContext());
@@ -334,7 +340,7 @@ public class AppController extends Application {
 //		return quota;
 //	}
 	
-	private int getDisplayQuota(){
+	public int getDisplayQuota(){
 		return Integer.valueOf(properties.getProperty("display_quota", String.valueOf(20)));
 	}
 	
@@ -353,9 +359,9 @@ public class AppController extends Application {
 //		return Integer.valueOf(properties.getProperty("playlist_quota", String.valueOf(100)));
 //	}
 	
-	public int getHistoryQuota(){
-		return Integer.valueOf(properties.getProperty("history_quota", String.valueOf(50)));
-	}
+//	public int getHistoryQuota(){
+//		return Integer.valueOf(properties.getProperty("history_quota", String.valueOf(50)));
+//	}
 	
 	public synchronized Tracker getTracker(){
 		if (!AppController.getInstance().getSharedMem().containsKey("ga_tracker")){			

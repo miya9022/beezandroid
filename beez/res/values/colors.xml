@@ -2,6 +2,8 @@
 <resources>
 	<color name="tab_selected">#6496ed</color>
 	<color name="tab_background">#FFFFFF</color>
+	<color name="tab_slide_menu">#FF9F3C</color>
+	<color name="bgr_menu">#F38031</color>
 	<color name="red">#FF0000</color>
 	<color name="white">#FFFFFF</color>
 	<color name="offWhite">#DDDDDD</color>

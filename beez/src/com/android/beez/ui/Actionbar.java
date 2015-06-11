@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ public class Actionbar {
 	private ImageButton nowPlaying;
 	private ImageButton slidingMenu;
 	private ImageButton back;
-	private TextView activityTitle;
+	private ImageView activityTitle;
 
 	public static Actionbar getInstance() {
 		if (instance == null) {
@@ -70,24 +71,23 @@ public class Actionbar {
 		}
 	}
 
-	public void setActivityTitle(String title) {
-		if (activityTitle != null) {
-			activityTitle.setText(title);
-		}
-	}
+//	public void setActivityTitle(String title) {
+//		if (activityTitle != null) {
+//			activityTitle.setText(title);
+//		}
+//	}
 
 	public void appendTo(MenuActivity parentActivity) {
 		this.parentActivity = parentActivity;
 
 		LayoutInflater inflater = LayoutInflater.from(parentActivity);
 		this.view = inflater.inflate(R.layout.myactionbar, null);
-
-		ActionBar actionbar = ((ActionBarActivity) parentActivity)
-				.getSupportActionBar();
+		ActionBarActivity aba = (ActionBarActivity) parentActivity;
+		ActionBar actionbar = (aba).getSupportActionBar();
 
 		// Set title for activity
-		activityTitle = (TextView) this.view.findViewById(R.id.activity_title);
-		activityTitle.setText(parentActivity.getTitle());
+		activityTitle = (ImageView) this.view.findViewById(R.id.activity_title);
+//		activityTitle.setText(parentActivity.getTitle());
 
 		// Set click handler for sliding menu button (Open menu on clicking)
 		slidingMenu = (ImageButton) this.view.findViewById(R.id.sliding_menu);

@@ -1,0 +1,5 @@
+package com.android.beez.api;
+
+public interface NewsSourceApiClient {
+	public showListNews()
+}

@@ -25,4 +25,10 @@ public class Params {
 	public static final String HISTORY = "HISTORY";
 	public static final String DISPLAY_LIST = "DISPLAYLIST";
 	public static final String DISPLAY_LIST_ID = "DISPLAYLIST_ID";
+	
+	//links url
+	public static final String POST = "/post";
+	public static final String LISTPOST = "/list_post";
+	public static final String SEARCH = "/search";
+	
 }

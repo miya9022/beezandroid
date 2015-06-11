@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="slidingmenu_items">
+        <!--<item>バックグラウンド再生</item>-->
+        <item>友達招待で１００曲増加</item>
+        <item>評価やご意見はこちら</item>
+        <!-- <item>アプリを閉じる</item> -->
+    </string-array>
+    <string-array name="slidingmenu_item_tags">
+        <item>PlayInBackground</item>
+        <item>InviteFriend</item>
+        <item>ReviewApp</item>
+        <!-- <item>Exit</item> -->
+    </string-array>
+    <string-array name="slidingmenu_item_types">
+        <item>toggle</item>
+        <item>button</item>
+        <item>button</item>
+        <!-- <item>button</item> -->
+    </string-array>
+</resources>

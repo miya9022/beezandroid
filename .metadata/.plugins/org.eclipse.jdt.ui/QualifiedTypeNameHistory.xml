@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.android.beez.R"/>
 <fullyQualifiedTypeName name="com.android.beez.MenuActivity"/>
 <fullyQualifiedTypeName name="android.support.v7.app.ActionBarActivity"/>
 <fullyQualifiedTypeName name="android.os.AsyncTask"/>
@@ -11,10 +10,8 @@
 <fullyQualifiedTypeName name="org.apache.http.HttpResponse"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
-<fullyQualifiedTypeName name="org.json.JSONObject"/>
 <fullyQualifiedTypeName name="java.io.Serializable"/>
 <fullyQualifiedTypeName name="com.android.beez.ViewContentActivity"/>
-<fullyQualifiedTypeName name="com.android.beez.utils.Params"/>
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.view.ViewTreeObserver.OnScrollChangedListener"/>
 <fullyQualifiedTypeName name="android.support.v7.internal.widget.AdapterViewCompat.OnItemClickListener"/>
@@ -24,13 +21,37 @@
 <fullyQualifiedTypeName name="android.widget.ListView"/>
 <fullyQualifiedTypeName name="java.security.MessageDigest"/>
 <fullyQualifiedTypeName name="java.security.NoSuchAlgorithmException"/>
-<fullyQualifiedTypeName name="com.android.volley.Response"/>
 <fullyQualifiedTypeName name="com.android.volley.toolbox.StringRequest"/>
-<fullyQualifiedTypeName name="com.android.beez.app.AppController"/>
-<fullyQualifiedTypeName name="com.android.beez.api.NewsSourceApiClient"/>
 <fullyQualifiedTypeName name="android.widget.AdapterView"/>
 <fullyQualifiedTypeName name="com.android.beez.ui.Actionbar"/>
-<fullyQualifiedTypeName name="android.widget.Button"/>
 <fullyQualifiedTypeName name="com.android.beez.NewsPlayer"/>
+<fullyQualifiedTypeName name="android.widget.BaseAdapter"/>
+<fullyQualifiedTypeName name="android.view.LayoutInflater"/>
 <fullyQualifiedTypeName name="android.content.Context"/>
+<fullyQualifiedTypeName name="com.android.beez.loadimage.ImageFetcher"/>
+<fullyQualifiedTypeName name="android.app.AlertDialog"/>
+<fullyQualifiedTypeName name="android.widget.TextView"/>
+<fullyQualifiedTypeName name="android.widget.Button"/>
+<fullyQualifiedTypeName name="com.android.beez.adapter.NewsAdapter.NewsEntryHolder"/>
+<fullyQualifiedTypeName name="com.android.beez.R"/>
+<fullyQualifiedTypeName name="com.android.beez.R.id"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.android.beez.model.NewsBeez"/>
+<fullyQualifiedTypeName name="com.android.beez.api.NewsSourceApiClient"/>
+<fullyQualifiedTypeName name="com.android.volley.Response.Listener"/>
+<fullyQualifiedTypeName name="com.android.volley.Response.ErrorListener"/>
+<fullyQualifiedTypeName name="com.android.volley.Response"/>
+<fullyQualifiedTypeName name="org.json.JSONObject"/>
+<fullyQualifiedTypeName name="com.android.beez.utils.Params"/>
+<fullyQualifiedTypeName name="com.android.beez.utils.ShowMessage"/>
+<fullyQualifiedTypeName name="org.json.JSONArray"/>
+<fullyQualifiedTypeName name="com.android.beez.utils.JSON2Object"/>
+<fullyQualifiedTypeName name="com.gcm.GCMManager"/>
+<fullyQualifiedTypeName name="com.android.beez.adapter.NewsAdapter"/>
+<fullyQualifiedTypeName name="com.android.beez.app.AppController"/>
+<fullyQualifiedTypeName name="android.graphics.Bitmap"/>
+<fullyQualifiedTypeName name="android.graphics.drawable.BitmapDrawable"/>
+<fullyQualifiedTypeName name="com.android.beez.R.drawable"/>
+<fullyQualifiedTypeName name="java.util.Queue"/>
+<fullyQualifiedTypeName name="android.widget.ImageView"/>
 </qualifiedTypeNameHistroy>

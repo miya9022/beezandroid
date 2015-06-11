@@ -9,7 +9,7 @@ import com.android.beez.app.AppController;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
-public abstract class BaseNewsSourceApiClient {
+public abstract class BaseNewsSourceApiClient implements NewsSourceApiClient {
 	protected String baseUrl;
 	protected String apiBaseUrl;
 	protected Context context;
@@ -18,37 +18,25 @@ public abstract class BaseNewsSourceApiClient {
 		return baseUrl;
 	}
 
-
-
 	public void setBaseUrl(String baseUrl) {
 		this.baseUrl = baseUrl;
 	}
-
-
 
 	public String getApiBaseUrl() {
 		return apiBaseUrl;
 	}
 
-
-
 	public void setApiBaseUrl(String apiBaseUrl) {
 		this.apiBaseUrl = apiBaseUrl;
 	}
-
-
 
 	public Context getContext() {
 		return context;
 	}
 
-
-
 	public void setContext(Context context) {
 		this.context = context;
 	}
-
-
 
 	public String createDigest(String source) {
 		MessageDigest md;

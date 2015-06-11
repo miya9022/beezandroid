@@ -1,0 +1,7 @@
+package com.android.beez.api;
+
+import com.android.volley.Response.Listener;
+
+public interface NewsSourceApiClient {
+	public String showListNews(Listener<String> listener);
+}

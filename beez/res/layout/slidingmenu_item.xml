@@ -9,7 +9,7 @@
         android:layout_height="60dp"
         android:orientation="horizontal"
         android:padding="5dp"
-        android:background="#d4678e" >
+        android:background="@color/transparent" >
 
         <ImageView
             android:id="@+id/slidingmenu_item_thumb"
@@ -24,10 +24,10 @@
             android:layout_gravity="center_vertical|left"
             android:layout_marginLeft="2dp"
             android:padding="2dp"
-            android:textColor="@color/white"
+            android:textColor="@color/darkGray"
             android:textSize="18sp" />
 
-        <ToggleButton
+        <!--  <ToggleButton
             android:id="@+id/slidingmenu_item_toggle"
             android:layout_width="50dip"
             android:layout_height="30dip"
@@ -37,15 +37,15 @@
             android:focusable="false"
             android:text="ToggleButton"
             android:textOff=""
-            android:textOn="" />
+            android:textOn="" />-->
 
-        <CheckBox
+        <!--<CheckBox
             android:id="@+id/slidingmenu_item_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right"
             android:layout_marginRight="5dp"
-            android:focusable="false" />
+            android:focusable="false" />-->
     </FrameLayout>
 
 </LinearLayout>

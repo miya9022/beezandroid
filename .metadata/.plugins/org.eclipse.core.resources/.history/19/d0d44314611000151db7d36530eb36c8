@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dip"
+    android:layout_height="fill_parent"
+    android:gravity="top|center"
+    android:orientation="vertical"
+    android:background="@drawable/tile_bg_menu">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:orientation="vertical"
+        android:background="@color/tab_slide_menu">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_logo" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/slidingmenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fadingEdgeLength="1dip"
+        android:scrollbars="none"
+        android:background="@color/transparent"
+        android:cacheColorHint="@color/darkGray"
+        android:divider="@color/transparent"
+        android:dividerHeight="1dp" >
+    </ListView>
+<View
+    android:layout_width="fill_parent"
+    android:layout_height="1dip"
+    android:background="@color/transparent"
+    />
+    <com.ad_stir.webview.AdstirMraidView
+	 			media="MEDIA-ad2753b9"
+	 			spot="7"
+	 			adsize="300,300"
+	 			locale="ja_JP"
+	 			refresh_interval="60"
+	 			android:layout_gravity="bottom|center"
+	 			android:layout_width="wrap_content"
+	 			android:layout_height="wrap_content" />
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dip"
+    android:layout_height="fill_parent"
+    android:gravity="top|center"
+    android:orientation="vertical"
+    android:background="@drawable/tile_bg_menu">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"                                 
+            android:paddingLeft="5dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/tab_slide_menu"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/slidingmenu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fadingEdgeLength="1dip"
+        android:scrollbars="none"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@color/tab_slide_menu"
+        android:dividerHeight="1dp" >
+    </ListView>
+<View
+    android:layout_width="fill_parent"
+    android:layout_height="1dip"
+    android:background="@color/tab_slide_menu"
+    />
+    <com.ad_stir.webview.AdstirMraidView
+	 			media="MEDIA-ad2753b9"
+	 			spot="7"
+	 			adsize="300,300"
+	 			locale="ja_JP"
+	 			refresh_interval="60"
+	 			android:layout_gravity="bottom|center"
+	 			android:layout_width="wrap_content"
+	 			android:layout_height="wrap_content" />
+</LinearLayout>
