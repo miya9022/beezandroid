@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.android.beez.MenuActivity"/>
-<fullyQualifiedTypeName name="android.support.v7.app.ActionBarActivity"/>
 <fullyQualifiedTypeName name="android.os.AsyncTask"/>
 <fullyQualifiedTypeName name="java.io.InputStream"/>
 <fullyQualifiedTypeName name="org.apache.http.client.HttpClient"/>
 <fullyQualifiedTypeName name="org.apache.http.impl.client.DefaultHttpClient"/>
 <fullyQualifiedTypeName name="org.apache.http.client.methods.HttpGet"/>
 <fullyQualifiedTypeName name="org.apache.http.HttpResponse"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="java.io.Serializable"/>
 <fullyQualifiedTypeName name="com.android.beez.ViewContentActivity"/>
-<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.view.ViewTreeObserver.OnScrollChangedListener"/>
 <fullyQualifiedTypeName name="android.support.v7.internal.widget.AdapterViewCompat.OnItemClickListener"/>
 <fullyQualifiedTypeName name="android.widget.AdapterView.OnItemClickListener"/>
@@ -34,7 +30,6 @@
 <fullyQualifiedTypeName name="android.widget.Button"/>
 <fullyQualifiedTypeName name="com.android.beez.adapter.NewsAdapter.NewsEntryHolder"/>
 <fullyQualifiedTypeName name="com.android.beez.R"/>
-<fullyQualifiedTypeName name="com.android.beez.R.id"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="com.android.beez.model.NewsBeez"/>
 <fullyQualifiedTypeName name="com.android.beez.api.NewsSourceApiClient"/>
@@ -52,6 +47,17 @@
 <fullyQualifiedTypeName name="android.graphics.Bitmap"/>
 <fullyQualifiedTypeName name="android.graphics.drawable.BitmapDrawable"/>
 <fullyQualifiedTypeName name="com.android.beez.R.drawable"/>
-<fullyQualifiedTypeName name="java.util.Queue"/>
 <fullyQualifiedTypeName name="android.widget.ImageView"/>
+<fullyQualifiedTypeName name="android.widget.AbsListView.OnScrollListener"/>
+<fullyQualifiedTypeName name="java.util.Queue"/>
+<fullyQualifiedTypeName name="com.origamilabs.library.views.StaggeredGridView"/>
+<fullyQualifiedTypeName name="com.etsy.android.grid.StaggeredGridView"/>
+<fullyQualifiedTypeName name="com.android.beez.R.id"/>
+<fullyQualifiedTypeName name="com.etsy.android.grid.util.DynamicHeightImageView"/>
+<fullyQualifiedTypeName name="android.util.SparseArray"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="com.android.beez.loadimage.ImageWorker.AsyncDrawable"/>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="com.android.beez.NewsListActivity"/>
 </qualifiedTypeNameHistroy>

@@ -26,6 +26,7 @@ import android.widget.ToggleButton;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.android.beez.MenuActivity;
+import com.android.beez.NewsListActivity;
 import com.android.beez.R;
 import com.android.beez.app.AppController;
 
@@ -95,7 +96,12 @@ public class Slidemenu implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		TextView v = (TextView) view.findViewById(R.id.slidingmenu_item_text);
-
+		if("Home".equals(v.getTag().toString())){
+			Intent intent = new Intent(this.parentActivity, NewsListActivity.class);
+			parentActivity.startActivity(intent);
+		} else if("Favourite".equals(v.getTag().toString())){
+			
+		}
 //		if ("PlayInBackground".equals(v.getTag().toString())) {
 //			// Do nothing
 //		} else if ("InviteFriend".equals(v.getTag().toString())) {
@@ -247,6 +253,11 @@ public class Slidemenu implements OnItemClickListener {
 						.findViewById(R.id.slidingmenu_item_text);
 				holder.image = (ImageView) view
 						.findViewById(R.id.slidingmenu_item_thumb);
+				
+				if(item.getType() == MenuItem.TYPE_BUTTON){
+					
+				}
+				
 //				holder.toggle = (ToggleButton) view
 //						.findViewById(R.id.slidingmenu_item_toggle);
 //				holder.check = (CheckBox) view

@@ -5,14 +5,17 @@
         <item>友達招待で１００曲増加</item>
         <item>評価やご意見はこちら</item>-->
         <!-- <item>アプリを閉じる</item> -->
+        <item>ホーム</item>
+        <item>お気に入り</item>
+        <item>提案します</item>
+    </string-array>
+    <string-array name="slidingmenu_item_tags">
         <item>Home</item>
         <item>Favourite</item>
         <item>Suggest</item>
-    </string-array>
-    <string-array name="slidingmenu_item_tags">
-        <item>PlayInBackground</item>
+        <!--  <item>PlayInBackground</item>
         <item>InviteFriend</item>
-        <item>ReviewApp</item>
+        <item>ReviewApp</item>-->
         <!-- <item>Exit</item> -->
     </string-array>
     <string-array name="slidingmenu_item_types">

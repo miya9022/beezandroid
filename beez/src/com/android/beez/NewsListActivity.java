@@ -23,26 +23,33 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.origamilabs.library.views.StaggeredGridView;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
 public class NewsListActivity extends MenuActivity implements InterstitialAds.OnInterstitialAdsEventListener {
+	private com.etsy.android.grid.StaggeredGridView gridView;
 	
-	private PullToRefreshListView listView;
 	private Button loadMore;
 	private NewsAdapter adapter = null;
 	private ArrayList<NewsBeez> newsList = null;
-//	private int quota_display = AppController.getInstance().getDisplayQuota();
-//	private Queue<NewsBeez> QueueDisplay = null;
-//	private int concurrent = 0;
+	private int quota_display = AppController.getInstance().getDisplayQuota();
+	private Queue<NewsBeez> QueueDisplay = null;
+	private int concurrent = 0;
+	
+	private boolean isTop = true;
 	private boolean nomoreData = false;
+	private boolean isScrollUp = true;
+	
 	private final String default_img_url = "http://beez.club/img/38x38xfavicon.png.pagespeed.ic.lvWi7wDCqW.png";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,52 +70,11 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 		loadMore.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				onButtonLoadMoreClick(v);
+				//onButtonLoadMoreClick(v);
 			}
 		});
-        
-        listView = (PullToRefreshListView)findViewById(R.id.listview);
-//        listView.getRefreshableView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        AppController.getInstance().showProgressDialog(this);
-		NewsSourceApiClient apiClient = AppController.getInstance().getNewsApiClient();
-		apiClient.showListNews(new Response.Listener<String>() {
-
-			@Override
-			public void onResponse(String data) {
-				onShowListResponse(data);
-				listView.onRefreshComplete();
-				AppController.getInstance().hideProgressDialog();
-				
-			}
-			
-		}, new Response.ErrorListener() {
-
-			@Override
-			public void onErrorResponse(VolleyError arg0) {
-				onShowListErrorResponse(arg0);
-				listView.onRefreshComplete();
-				AppController.getInstance().hideProgressDialog();
-				
-			}
-			
-		});
-        listView.getRefreshableView().addFooterView(loadMore);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				
-			}
-        	
-        });
-        
-        listView.setOnRefreshListener(new OnRefreshListener<ListView>() {
-			@Override
-			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-				onButtonLoadMoreClick(refreshView);
-			}
-        });
-        
-        
+		gridView = (com.etsy.android.grid.StaggeredGridView) findViewById(R.id.staggeredGridview);
+        onButtonLoadMoreClick(null);
 	}
 	
 	protected void onShowListResponse(String data) {
@@ -144,8 +110,12 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 				JSON2Object j2o = new JSON2Object(NewsBeez.class, item);
 				NewsBeez news = (NewsBeez) j2o.parse();
 				String headline_img = item.optString(Params.HEADLINE_IMG, "NULL");
+				String time = item.optString(Params.TIME, "NULL");
+				String app_domain = item.optString(Params.APP_DOMAIN, "NULL");
 				if (headline_img != null){
 					news.setHeadline_img(headline_img);
+					news.setTime(time);
+					news.setApp_domain(app_domain);
 				} else {
 					news.setHeadline_img(default_img_url);
 				}
@@ -154,7 +124,7 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 			//concurrent += quota_display;
 			if(adapter == null){
 				adapter = new NewsAdapter(this, newsList);
-				listView.setAdapter(adapter); 
+				gridView.setAdapter(adapter); 
 			} else {
 				if (newsList.size() > 0) {
 					adapter.getEntries().addAll(newsList);
@@ -180,7 +150,7 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 			@Override
 			public void onResponse(String data) {
 				onShowListResponse(data);
-				listView.onRefreshComplete();
+				//listView.onRefreshComplete();
 				AppController.getInstance().hideProgressDialog();
 				
 			}
@@ -190,7 +160,7 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 			@Override
 			public void onErrorResponse(VolleyError arg0) {
 				onShowListErrorResponse(arg0);
-				listView.onRefreshComplete();
+				//listView.onRefreshComplete();
 				AppController.getInstance().hideProgressDialog();
 				
 			}

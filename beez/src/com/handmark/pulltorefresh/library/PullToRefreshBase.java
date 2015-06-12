@@ -1650,5 +1650,4 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	static interface OnSmoothScrollFinishedListener {
 		void onSmoothScrollFinished();
 	}
-
 }
