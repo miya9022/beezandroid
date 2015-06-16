@@ -25,6 +25,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.android.beez.FavouriteActivity;
 import com.android.beez.MenuActivity;
 import com.android.beez.NewsListActivity;
 import com.android.beez.R;
@@ -100,6 +101,9 @@ public class Slidemenu implements OnItemClickListener {
 			Intent intent = new Intent(this.parentActivity, NewsListActivity.class);
 			parentActivity.startActivity(intent);
 		} else if("Favourite".equals(v.getTag().toString())){
+			Intent intent = new Intent(this.parentActivity, FavouriteActivity.class);
+			parentActivity.startActivity(intent);
+		} else if("Suggest".equals(v.getTag().toString())){
 			
 		}
 //		if ("PlayInBackground".equals(v.getTag().toString())) {

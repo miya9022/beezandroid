@@ -6,8 +6,8 @@
         <item>評価やご意見はこちら</item>-->
         <!-- <item>アプリを閉じる</item> -->
         <item>ホーム</item>
-        <item>お気に入り</item>
-        <item>提案します</item>
+        <item>人気</item>
+        <item>おすすめ</item>
     </string-array>
     <string-array name="slidingmenu_item_tags">
         <item>Home</item>

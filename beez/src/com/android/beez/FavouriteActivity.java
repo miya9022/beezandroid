@@ -1,29 +1,24 @@
 package com.android.beez;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.android.beez.adapter.NewsAdapter;
+import com.android.beez.adapter.FavouriteAdapter;
 import com.android.beez.api.NewsSourceApiClient;
 import com.android.beez.app.AppController;
 import com.android.beez.model.NewsBeez;
 import com.android.beez.ui.Actionbar;
-import com.android.beez.ui.InterstitialAds;
 import com.android.beez.ui.Slidemenu;
 import com.android.beez.utils.JSON2Object;
 import com.android.beez.utils.Params;
 import com.android.beez.utils.ShowMessage;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.gcm.GCMManager;
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.origamilabs.library.views.StaggeredGridView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -32,51 +27,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
 
-public class NewsListActivity extends MenuActivity implements InterstitialAds.OnInterstitialAdsEventListener, 
-	AbsListView.OnItemClickListener {
-	private com.etsy.android.grid.StaggeredGridView gridView;
+public class FavouriteActivity extends MenuActivity implements AbsListView.OnItemClickListener{
 	
-	private Button loadMore;
-	private NewsAdapter adapter = null;
-	private ArrayList<NewsBeez> newsList = null;
-	private int quota_display = AppController.getInstance().getDisplayQuota();
-	private Queue<NewsBeez> QueueDisplay = null;
-	private int concurrent = 0;
-	
-	private boolean isTop = true;
 	private boolean nomoreData = false;
-	private boolean isScrollUp = true;
-	
-	private final String default_img_url = "http://beez.club/img/38x38xfavicon.png.pagespeed.ic.lvWi7wDCqW.png";
+	private com.etsy.android.grid.StaggeredGridView gridView;
+	private ArrayList<NewsBeez> newsList;
+	private FavouriteAdapter adapter;
+	private int rank = 0;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_menu);
-        Slidemenu.getInstance().clearMenuActivity(this);
-//      GCMManager.getInstace().init(this);
-//      Actionbar.getInstance().appendTo(this);
-//		Slidemenu.getInstance().appendTo(this);
-//		Actionbar.getInstance().showSlidingMenu(View.VISIBLE);
-//		Actionbar.getInstance().showBack(View.INVISIBLE);
-        
-        loadMore = new Button(this);
-        loadMore.setText(R.string.btn_more);
-		loadMore.setBackgroundColor(R.drawable.mybutton);
-		loadMore.setTextColor(getResources().getColor(R.color.white));
-		loadMore.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				//onButtonLoadMoreClick(v);
-			}
-		});
-		gridView = (com.etsy.android.grid.StaggeredGridView) findViewById(R.id.staggeredGridview);
-        onButtonLoadMoreClick(null);
-        gridView.setOnItemClickListener(this);
+		setContentView(R.layout.activity_favourite);
+		Slidemenu.getInstance().clearMenuActivity(this);
+		gridView = (com.etsy.android.grid.StaggeredGridView) findViewById(R.id.favourite_Gridview);
+		LoadFavouritePosts(null);
+		gridView.setOnItemClickListener(this);
 	}
 	
 	protected void onShowListResponse(String data) {
@@ -89,21 +57,18 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 			}
 			if (!"OK".equals(code)) {
 				nomoreData = true;
-				loadMore.setVisibility(View.GONE);
 				return;
 			}
 			
 			String strData = jsonObject.getString(Params.DATA);
 			if(strData == null){
 				nomoreData = true;
-				loadMore.setVisibility(View.GONE);
 				return;
 			}
 			
 			JSONArray jsonItems = new JSONArray(strData);
 			if (jsonItems.length() <= 0) {
 				nomoreData = true;
-				loadMore.setVisibility(View.GONE);
 				return;
 			}
 			newsList = new ArrayList<NewsBeez>();
@@ -111,21 +76,42 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 				JSONObject item = jsonItems.getJSONObject(i);
 				JSON2Object j2o = new JSON2Object(NewsBeez.class, item);
 				NewsBeez news = (NewsBeez) j2o.parse();
+				String title = item.optString(Params.TITLE, "NULL");
+				String headline = item.optString(Params.HEADLINE, "NULL");
 				String headline_img = item.optString(Params.HEADLINE_IMG, "NULL");
 				String time = item.optString(Params.TIME, "NULL");
 				String app_domain = item.optString(Params.APP_DOMAIN, "NULL");
+				int view = item.optInt(Params.VIEW, 0);
 				if (headline_img != null){
+					news.setTitle(title);
 					news.setHeadline_img(headline_img);
+					news.setHeadline(headline);
 					news.setTime(time);
 					news.setApp_domain(app_domain);
-				} else {
-					news.setHeadline_img(default_img_url);
+					news.setView(view);
 				}
-				newsList.add(news);
+				if(time.contains("day") || time.contains("hour") || time.contains("second")){
+					newsList.add(news);
+				}
+				
+				if(newsList.size() > 1){
+					Collections.sort(newsList, new Comparator<NewsBeez>() {
+
+						@Override
+						public int compare(NewsBeez lhs, NewsBeez rhs) {
+							rank++;
+							if(rhs.view - lhs.view > 0){
+								lhs.setRank(rank);
+							}
+							return rhs.view - lhs.view;
+						}
+						
+					});
+				}
 			}
 			//concurrent += quota_display;
 			if(adapter == null){
-				adapter = new NewsAdapter(this, newsList, false);
+				adapter = new FavouriteAdapter(this, newsList);
 				gridView.setAdapter(adapter); 
 			} else {
 				if (newsList.size() > 0) {
@@ -135,16 +121,14 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 		} catch(Exception ex){
 			ex.printStackTrace();
 			nomoreData = true;
-			loadMore.setVisibility(View.GONE);
 		}
 	}
 	
 	protected void onShowListErrorResponse(VolleyError error) {
 		nomoreData = true;
-		loadMore.setVisibility(View.GONE);
 	}
 	
-	protected void onButtonLoadMoreClick(View v){
+	protected void LoadFavouritePosts(View v){
 		AppController.getInstance().showProgressDialog(this);
 		NewsSourceApiClient apiClient = AppController.getInstance().getNewsApiClient();
 		apiClient.showListNews(new Response.Listener<String>() {
@@ -152,7 +136,6 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 			@Override
 			public void onResponse(String data) {
 				onShowListResponse(data);
-				//listView.onRefreshComplete();
 				AppController.getInstance().hideProgressDialog();
 				
 			}
@@ -162,14 +145,13 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 			@Override
 			public void onErrorResponse(VolleyError arg0) {
 				onShowListErrorResponse(arg0);
-				//listView.onRefreshComplete();
 				AppController.getInstance().hideProgressDialog();
 				
 			}
 			
 		});
 	}
-	
+
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -186,19 +168,13 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 		Slidemenu.getInstance().appendTo(this);
 		Actionbar.getInstance().showSlidingMenu(View.VISIBLE);
 		Actionbar.getInstance().showBack(View.INVISIBLE);
-//		if (AppController.getInstance().getMusicPlayer().isNowPlaying()) {
-//			Actionbar.getInstance().showNowPlaying();
-//		} else {
-//			Actionbar.getInstance().hideNowPlaying();
-//		}
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		// TODO Auto-generated method stub
 		NewsBeez entry = newsList.get(position);
-		Intent i = new Intent(NewsListActivity.this, ViewContentActivity.class);
+		Intent i = new Intent(FavouriteActivity.this, ViewContentActivity.class);
 		i.putExtra(Params.TITLE, entry.getTitle());
 		i.putExtra(Params.HEADLINE, entry.getHeadline());
 		i.putExtra(Params.HEADLINE_IMG, entry.getHeadline_img());

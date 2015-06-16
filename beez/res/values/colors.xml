@@ -14,7 +14,7 @@
 	<color name="brightGreen">#00FF00</color>
 	<color name="brightBlue">#2222EF</color>
 	<color name="darkBlue">#880000FF</color>
-	<color name="transparent">#000000FF</color>
+	<color name="transparent">#CCCCCC</color>
 	<color name="lightBlue">#1983ab</color>
 	<color name="btn_background">#6496ed</color>
 	<color name="btn_text">#6496ed</color>

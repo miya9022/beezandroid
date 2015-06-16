@@ -6,7 +6,150 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.android.beez.ViewContentActivity" >
+    tools:context="com.android.beez.ViewContentActivity" 
+    android:background="@color/transparent">
    
-
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+        
+        <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_margin="5dp"
+	        android:orientation="vertical">
+        
+	        <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="130dp"
+	            android:orientation="horizontal"
+	            android:id="@+id/header_layout">
+	
+	            <ImageView
+			        android:id="@+id/headline_img_clicked"
+			        android:layout_width="120dp"
+			        android:layout_height="match_parent"
+			        android:adjustViewBounds="true"
+			        android:scaleType="center" />
+			    
+	            <LinearLayout
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:orientation="vertical"
+		            android:layout_marginLeft="10dp">
+		            
+				    <TextView
+				        android:id="@+id/title_clicked"
+				        android:layout_width="fill_parent"
+				        android:layout_height="wrap_content"
+				        android:layout_gravity="left"
+				        android:layout_toRightOf="@id/headline_img_clicked"
+				        android:maxLines="4"
+			            android:ellipsize="end"
+				        android:textColor="@color/black"
+				        android:textSize="16sp" />
+				    
+				    <TextView
+					    android:id="@+id/headline_clicked"
+					    android:layout_width="fill_parent"
+				        android:layout_height="wrap_content"
+				        android:layout_gravity="left"
+				        android:layout_below="@id/title_clicked"
+				        android:layout_toRightOf="@id/headline_img_clicked"
+				        android:maxLines="1"
+				        android:textColor="@color/lightGray"
+				        android:textSize="14sp"/>
+						   
+					<TextView
+					    android:id="@+id/time_clicked"
+					    android:layout_width="fill_parent"
+				        android:layout_height="wrap_content"
+				        android:layout_gravity="left"
+				        android:layout_below="@id/headline_clicked"
+				        android:layout_toRightOf="@id/headline_img_clicked"
+				        android:maxLines="1"
+				        android:textColor="@color/lightGray"
+				        android:textSize="12sp"/>
+					
+					<TextView
+				        android:id="@+id/app_domain_clicked"
+				        android:layout_width="fill_parent"
+				        android:layout_height="wrap_content"
+				        android:layout_below="@id/time_clicked"
+				        android:layout_toRightOf="@id/headline_img_clicked"
+				        android:maxLines="1"
+				        android:textColor="@color/lightGray"
+				        android:textSize="12sp" />
+					
+					<TextView
+				        android:id="@+id/view_by_clicked"
+				        android:layout_width="fill_parent"
+				        android:layout_height="wrap_content"
+				        android:layout_below="@id/app_domain_clicked"
+				        android:layout_toRightOf="@id/headline_img_clicked"
+				        android:layout_gravity="end"
+				        android:maxLines="1"
+				        android:textColor="@color/tab_slide_menu"
+				        android:textSize="15sp" />
+				</LinearLayout>
+	            
+	        </LinearLayout>
+	
+	        <Button
+	            android:id="@+id/view_more"
+	            android:layout_width="130dp"
+	            android:layout_height="20dp"
+	            android:layout_marginTop="10dp"
+	            android:layout_gravity="center_horizontal"
+	            android:background="@drawable/mybutton"
+	            android:text="@string/view_more"
+	            android:textColor="@color/white" />
+	        
+	        <LinearLayout
+	           	android:layout_width="fill_parent"
+	           	android:layout_height="fill_parent"
+	           	android:orientation="vertical"
+	           	android:id="@+id/list_layout">
+	            
+	            <TextView
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:text="@string/related_posts"
+	                android:layout_marginBottom="10dp"
+	                android:layout_marginTop="20dp"/>
+	           
+	            <ListView
+	                android:id="@+id/listview"
+			        android:layout_width="match_parent"
+			        android:layout_height="match_parent"
+			        android:layout_gravity="top"
+			        android:layout_marginBottom="10dp"
+			        android:divider="@color/transparent"
+			        android:dividerHeight="1dp"
+			        android:background="@color/white"
+			        android:cacheColorHint="@color/white"
+			        android:smoothScrollbar="true"/>
+	            <!--<com.handmark.pulltorefresh.library.PullToRefreshListView
+			        xmlns:android="http://schemas.android.com/apk/res/android"
+			        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+			        ptr:ptrHeaderSubTextColor="@android:color/white"
+			        ptr:ptrHeaderTextColor="@android:color/white"
+			        android:id="@+id/listview"
+			        android:layout_width="match_parent"
+			        android:layout_height="match_parent"
+			        android:layout_gravity="top"
+			        android:layout_marginBottom="10dp"
+			        android:divider="@color/transparent"
+			        android:dividerHeight="1dp"
+			        android:background="@color/white"
+			        android:cacheColorHint="@color/white"
+			        android:smoothScrollbar="false"
+			         />-->
+	            
+	        </LinearLayout>
+        
+    	</LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

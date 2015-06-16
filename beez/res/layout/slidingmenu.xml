@@ -28,7 +28,7 @@
         android:fadingEdgeLength="1dip"
         android:scrollbars="none"
         android:background="@color/transparent"
-        android:cacheColorHint="@color/darkGray"
+        android:cacheColorHint="@color/white"
         android:divider="@color/lightGray"
         android:dividerHeight="1dp" >
     </ListView>

@@ -27,8 +27,10 @@
     <string name="msg_no_facebook_installed">Facebookがインストールされていません</string>
     <string name="msg_no_twitter_installed">Twitterがインストールされていません</string>
 
-    <!-- Sliding menu -->
+    <!-- Sliding menu, title list -->
     <string name="title_slide_menu">メニュー</string>
+    <string name="related_posts">関連する記事</string>
+    <string name="view_more">続きを見る</string>
 
     <!-- Playlist dialog -->
     <string name="title_add_to_playlist">プレイリストに加える</string>
@@ -90,5 +92,8 @@
     <string name="warning_change_song">%s is loading.\n Please wait few second and retry</string>
     <string name="title_activity_view_content">ViewContentActivity</string>
     <string name="title_activity_news_list">NewsListActivity</string>
+    <string name="title_activity_more_content">MoreContentActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_favourite">FavouriteActivity</string>
 
 </resources>

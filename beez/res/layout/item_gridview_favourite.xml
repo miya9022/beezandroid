@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:padding="5dp" 
+    android:background="@color/white">
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+       	android:layout_height="100dp"
+        android:orientation="horizontal" 
+        android:layout_margin="2dp"
+        android:id="@+id/lnr_head_favourite_lo">
+        
+	    <com.etsy.android.grid.util.DynamicHeightImageView
+	        android:id="@+id/headline_img_favourite"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:adjustViewBounds="true"
+	        android:scaleType="center" />
+	    
+	    <ImageView
+	        android:id="@+id/img_label"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="@id/headline_img_favourite"
+	        android:layout_alignParentTop="@id/headline_img_favourite"
+	        android:src="@drawable/ic_label"/>
+
+	    <TextView
+	        android:id="@+id/ranked_post"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textColor="@color/white" 
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginTop="5dp"/>
+	    
+	</RelativeLayout>
+
+    <LinearLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_below="@id/lnr_head_favourite_lo"
+		    android:layout_marginLeft="10dp"
+		    android:orientation="vertical"
+		    android:id="@+id/headline_lo">
+			<TextView
+		        android:id="@+id/title_favourite"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center_vertical"
+		        android:maxLines="4"
+                android:ellipsize="end"
+		        android:textColor="@color/black"
+		        android:textSize="14sp" />
+			   
+			<TextView
+			    android:id="@+id/time_favourite"
+			    android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="left"
+		        android:layout_below="@id/title"
+		        android:maxLines="1"
+		        android:textColor="@color/lightGray"
+		        android:textSize="12sp"/>
+			
+			<TextView
+		        android:id="@+id/app_domain_favourite"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:maxLines="1"
+		        android:textColor="@color/lightGray"
+		        android:textSize="12sp" />
+			
+			<TextView
+		        android:id="@+id/view_favourite"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:maxLines="1"
+		        android:textColor="@color/tab_slide_menu"
+		        android:textSize="13sp" />
+	    </LinearLayout>
+
+</RelativeLayout>

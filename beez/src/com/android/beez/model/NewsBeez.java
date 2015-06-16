@@ -13,6 +13,8 @@ public class NewsBeez implements Serializable {
 	public String cate_id;
 	public String short_link;
 	public String time;
+	
+	public int rank;
 	public int view = 0;
 		
 	public NewsBeez() {
@@ -28,6 +30,14 @@ public class NewsBeez implements Serializable {
 		this.headline_img = headline_img;
 		this.origin_url = origin_url;
 		this.app_domain = app_domain;
+	}
+	
+	public int getRank() {
+		return rank;
+	}
+
+	public void setRank(int rank) {
+		this.rank = rank;
 	}
 
 	public String getId() {

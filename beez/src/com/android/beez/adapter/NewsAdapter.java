@@ -60,36 +60,57 @@ public class NewsAdapter extends BaseAdapter {
 		View view = convertView;
 		NewsEntryHolder holder = null;
 		final NewsBeez entry = entries.get(position);
-		
-		if(view == null){
-			view = inflater.inflate(this.layoutResourceId, parent, false);
-			holder = new NewsEntryHolder();
-			holder.headline_img = (DynamicHeightImageView) view.findViewById(R.id.headline_img);
-			holder.title = (TextView) view.findViewById(R.id.title);
-			//holder.headline = (TextView) view.findViewById(R.id.headline);
-			holder.time = (TextView) view.findViewById(R.id.time);
-			holder.app_domain = (TextView) view.findViewById(R.id.app_domain);
-			view.setTag(holder);
+		if(this.layoutResourceId == R.layout.item_listview){
+			if(view == null){
+				view = inflater.inflate(this.layoutResourceId, parent, false);
+				holder = new NewsEntryHolder();
+				holder.headline_img = (ImageView) view.findViewById(R.id.headline_img_by_app_domain);
+				holder.title = (TextView) view.findViewById(R.id.title_by_app_domain);
+				holder.app_domain = (TextView) view.findViewById(R.id.app_domain_source);
+				holder.time = (TextView) view.findViewById(R.id.time_by_app_domain);
+				holder.view = (TextView) view.findViewById(R.id.view_by_app_domain);
+				view.setTag(holder);
+			} else {
+				holder = (NewsEntryHolder)view.getTag();
+			}
+			holder.title.setText(entry.getTitle());
+			holder.time.setText(entry.getTime());
+			holder.app_domain.setText(entry.getApp_domain());
+			holder.view.setText(entry.getView()+" view");
+			imageFetcher.loadImage(entry.getHeadline_img(), holder.headline_img, null);
 		} else {
-			holder = (NewsEntryHolder)view.getTag();
+			if(view == null){
+				view = inflater.inflate(this.layoutResourceId, parent, false);
+				holder = new NewsEntryHolder();
+				holder.gv_headline_img = (DynamicHeightImageView) view.findViewById(R.id.headline_img);
+				holder.title = (TextView) view.findViewById(R.id.title);
+				//holder.headline = (TextView) view.findViewById(R.id.headline);
+				holder.time = (TextView) view.findViewById(R.id.time);
+				holder.app_domain = (TextView) view.findViewById(R.id.app_domain);
+				view.setTag(holder);
+			} else {
+				holder = (NewsEntryHolder)view.getTag();
+			}
+			
+			holder.title.setText(entry.getTitle());
+			//holder.headline.setText(entry.getHeadline());
+			holder.time.setText(entry.getTime());
+			holder.app_domain.setText(entry.getApp_domain());
+			double positionHeight = getPositionRatio(position);
+	        holder.gv_headline_img.setHeightRatio(positionHeight);
+	        imageFetcher.setImageSize(holder.gv_headline_img.getWidth(),(int)Math.round(positionHeight));
+			imageFetcher.loadImage(entry.getHeadline_img(), holder.gv_headline_img, null);
 		}
-		
-		holder.title.setText(entry.getTitle());
-		//holder.headline.setText(entry.getHeadline());
-		holder.time.setText(entry.getTime());
-		holder.app_domain.setText(entry.getApp_domain());
-		double positionHeight = getPositionRatio(position);
-        holder.headline_img.setHeightRatio(positionHeight);
-        imageFetcher.setImageSize((int)Math.round(positionHeight));
-		imageFetcher.loadImage(entry.getHeadline_img(), holder.headline_img, null);
 		return view;
 	}
 	
 	static class NewsEntryHolder{
-		DynamicHeightImageView headline_img;
+		DynamicHeightImageView gv_headline_img;
+		ImageView headline_img;
 		TextView title;
-		//TextView headline;
+		TextView headline;
 		TextView time;
+		TextView view;
 		TextView app_domain;
 	}
 	
@@ -118,23 +139,23 @@ public class NewsAdapter extends BaseAdapter {
 //				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 //		this.imageFetcher = AppController.getInstance().getImageFetcher();
 //	}
-	
-	public NewsAdapter(Context context, ArrayList<NewsBeez> entries) {
+    
+    public NewsAdapter(Context context, ArrayList<NewsBeez> entries, boolean viewContent) {
 		super();
 		this.entries = entries;
-		
-		this.layoutResourceId = R.layout.item_newslist;
+		this.layoutResourceId = viewContent ? R.layout.item_listview : R.layout.item_gridview;
 		this.context = context;
 		this.inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.imageFetcher = AppController.getInstance().getImageFetcher();
 		this.mRandom = new Random();
 	}
-
-	public NewsAdapter(Context context, ArrayList<NewsBeez> entries, boolean hideOrder) {
+	
+	public NewsAdapter(Context context, ArrayList<NewsBeez> entries) {
 		super();
 		this.entries = entries;
-		this.layoutResourceId = R.layout.item_newslist;
+		
+		this.layoutResourceId = R.layout.item_gridview;
 		this.context = context;
 		this.inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
