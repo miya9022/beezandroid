@@ -19,6 +19,7 @@ public class Params {
 	public static final String SHORT_LINK = "short_link";
 	public static final String TIME = "time";
 	public static final String VIEW = "view";
+	public static final String CONTENT = "content";
 	
 	//tables in database
 	public static final String NEWS = "NEWS";

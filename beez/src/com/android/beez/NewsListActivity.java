@@ -28,6 +28,7 @@ import com.origamilabs.library.views.StaggeredGridView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -125,6 +126,7 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 			}
 			
 			String strData = jsonObject.getString(Params.DATA);
+			
 			if(strData == null){
 				nomoreData = true;
 				loadMore.setVisibility(View.GONE);
@@ -237,6 +239,7 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 		i.putExtra(Params.APP_DOMAIN, entry.getApp_domain());
 		i.putExtra(Params.TIME, entry.getTime());
 		i.putExtra(Params.VIEW, entry.getView());
+		i.putExtra(Params.ID,entry.getId());
 		startActivity(i);
 	}
 }

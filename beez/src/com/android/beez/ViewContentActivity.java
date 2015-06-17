@@ -3,6 +3,8 @@ package com.android.beez;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import javax.xml.datatype.Duration;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -35,6 +37,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ViewContentActivity extends MenuActivity {
 
@@ -62,7 +65,6 @@ public class ViewContentActivity extends MenuActivity {
 		Slidemenu.getInstance().clearMenuActivity(this);
 		Intent intent = getIntent();
 		init(intent);
-		
 		listView = (ListView) findViewById(R.id.listview);
 		onLoadPostsByAppDomain(null);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,6 +93,7 @@ public class ViewContentActivity extends MenuActivity {
 		String headline_img = intent.getStringExtra(Params.HEADLINE_IMG);
 		String app_domain = intent.getStringExtra(Params.APP_DOMAIN);
 		String time = intent.getStringExtra(Params.TIME);
+		
 		int view = intent.getIntExtra(Params.VIEW, 0);
 		if(!app_domain.isEmpty()){
 			app_domain_display = app_domain;
