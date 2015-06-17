@@ -13,8 +13,8 @@
 *.so
 
 # generated files
-bin/
-gen/
+beez/bin/
+beez/gen/
 
 # Ignore gradle files
 .gradle/
