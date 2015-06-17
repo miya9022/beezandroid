@@ -1301,4 +1301,8 @@ public class StaggeredGridView extends ExtendableListView {
         mNeedSync = true;
         super.onRestoreInstanceState(ss);
     }
+    
+    public void smoothScrollToPosition(int position) {
+    	super.smoothScrollToPosition(position);
+    }
 }

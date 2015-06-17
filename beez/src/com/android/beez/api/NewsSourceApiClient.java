@@ -8,5 +8,6 @@ public interface NewsSourceApiClient {
 	public String showListNews(Listener<String> listener, Response.ErrorListener errorlistener);
 	//search posts by time
 	public String searchByTime(String time, Listener<String> listener, Response.ErrorListener errorlistener);
-	
+	//list recommend posts
+	public String showRecommendPosts(Listener<String> listener, Response.ErrorListener errorlistener);
 }

@@ -95,5 +95,6 @@
     <string name="title_activity_more_content">MoreContentActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_favourite">FavouriteActivity</string>
+    <string name="title_activity_suggest">SuggestActivity</string>
 
 </resources>

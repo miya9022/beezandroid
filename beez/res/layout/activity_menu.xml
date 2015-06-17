@@ -9,17 +9,32 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.android.beez.NewsListActivity" >
-
-    <com.etsy.android.grid.StaggeredGridView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/staggeredGridview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:column_count="2"
-        app:item_margin="6dp" >
-    </com.etsy.android.grid.StaggeredGridView>
     
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="horizontal"
+        android:id="@+id/rlt_layout_gv">
+	    
+	    <com.etsy.android.grid.StaggeredGridView
+	        xmlns:android="http://schemas.android.com/apk/res/android"
+	        xmlns:app="http://schemas.android.com/apk/res-auto"
+	        android:id="@+id/staggeredGridview"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        app:column_count="2"
+	        app:item_margin="6dp" >
+	    </com.etsy.android.grid.StaggeredGridView>
+
+	    <ImageButton
+	        android:id="@+id/scroll_top"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignParentRight="true"
+	        android:src="@drawable/ic_scrolltop" />
+	    
+    </RelativeLayout>
     <!--  <com.handmark.pulltorefresh.library.PullToRefreshListView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:ptr="http://schemas.android.com/apk/res-auto"

@@ -59,6 +59,13 @@
 		        android:textColor="@color/lightGray"
 		        android:textSize="12sp" />
 			
+			<TextView
+		        android:id="@+id/view"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:maxLines="1"
+		        android:textColor="@color/tab_slide_menu"
+		        android:textSize="13sp" />
 	    </LinearLayout>
 
     

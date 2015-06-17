@@ -8,10 +8,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.android.beez.adapter.FavouriteAdapter;
+import com.android.beez.adapter.SuggestAdapter;
 import com.android.beez.api.NewsSourceApiClient;
 import com.android.beez.app.AppController;
 import com.android.beez.model.NewsBeez;
 import com.android.beez.ui.Actionbar;
+import com.android.beez.ui.InterstitialAds;
 import com.android.beez.ui.Slidemenu;
 import com.android.beez.utils.JSON2Object;
 import com.android.beez.utils.Params;
@@ -21,7 +23,6 @@ import com.android.volley.VolleyError;
 import com.google.android.gms.analytics.GoogleAnalytics;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,21 +30,20 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 
-public class FavouriteActivity extends MenuActivity implements AbsListView.OnItemClickListener{
+public class SuggestActivity extends MenuActivity implements AbsListView.OnItemClickListener{
 	
 	private boolean nomoreData = false;
 	private com.etsy.android.grid.StaggeredGridView gridView;
 	private ArrayList<NewsBeez> newsList;
-	private FavouriteAdapter adapter;
-	private int rank = 0;
+	private SuggestAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_favourite);
+		setContentView(R.layout.activity_suggest);
 		Slidemenu.getInstance().clearMenuActivity(this);
-		gridView = (com.etsy.android.grid.StaggeredGridView) findViewById(R.id.favourite_Gridview);
-		LoadFavouritePosts(null);
+		gridView = (com.etsy.android.grid.StaggeredGridView) findViewById(R.id.suggest_Gridview);
+		LoadSuggestPosts(null);
 		gridView.setOnItemClickListener(this);
 	}
 	
@@ -90,24 +90,11 @@ public class FavouriteActivity extends MenuActivity implements AbsListView.OnIte
 					news.setApp_domain(app_domain);
 					news.setView(view);
 				}
-				if(time.contains("day") || time.contains("hour") || time.contains("second")){
-					newsList.add(news);
-				}
-				
-				if(newsList.size() > 1){
-					Collections.sort(newsList, new Comparator<NewsBeez>() {
-
-						@Override
-						public int compare(NewsBeez lhs, NewsBeez rhs) {
-							return rhs.view - lhs.view;
-						}
-						
-					});
-				}
+				newsList.add(news);
 			}
 			//concurrent += quota_display;
 			if(adapter == null){
-				adapter = new FavouriteAdapter(this, newsList);
+				adapter = new SuggestAdapter(this, newsList);
 				gridView.setAdapter(adapter); 
 			} else {
 				if (newsList.size() > 0) {
@@ -124,10 +111,10 @@ public class FavouriteActivity extends MenuActivity implements AbsListView.OnIte
 		nomoreData = true;
 	}
 	
-	protected void LoadFavouritePosts(View v){
+	protected void LoadSuggestPosts(View v){
 		AppController.getInstance().showProgressDialog(this);
 		NewsSourceApiClient apiClient = AppController.getInstance().getNewsApiClient();
-		apiClient.showListNews(new Response.Listener<String>() {
+		apiClient.showRecommendPosts(new Response.Listener<String>() {
 
 			@Override
 			public void onResponse(String data) {
@@ -169,14 +156,7 @@ public class FavouriteActivity extends MenuActivity implements AbsListView.OnIte
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		NewsBeez entry = newsList.get(position);
-		Intent i = new Intent(FavouriteActivity.this, ViewContentActivity.class);
-		i.putExtra(Params.TITLE, entry.getTitle());
-		i.putExtra(Params.HEADLINE, entry.getHeadline());
-		i.putExtra(Params.HEADLINE_IMG, entry.getHeadline_img());
-		i.putExtra(Params.APP_DOMAIN, entry.getApp_domain());
-		i.putExtra(Params.TIME, entry.getTime());
-		i.putExtra(Params.VIEW, entry.getView());
-		startActivity(i);
+		// TODO Auto-generated method stub
+		
 	}
 }

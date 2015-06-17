@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.apache.http.HttpResponse"/>
-<fullyQualifiedTypeName name="android.widget.Toast"/>
-<fullyQualifiedTypeName name="java.io.Serializable"/>
-<fullyQualifiedTypeName name="android.view.ViewTreeObserver.OnScrollChangedListener"/>
-<fullyQualifiedTypeName name="android.support.v7.internal.widget.AdapterViewCompat.OnItemClickListener"/>
-<fullyQualifiedTypeName name="android.media.MediaPlayer.OnCompletionListener"/>
-<fullyQualifiedTypeName name="com.handmark.pulltorefresh.library.PullToRefreshListView"/>
 <fullyQualifiedTypeName name="java.security.MessageDigest"/>
 <fullyQualifiedTypeName name="java.security.NoSuchAlgorithmException"/>
 <fullyQualifiedTypeName name="com.android.volley.toolbox.StringRequest"/>
 <fullyQualifiedTypeName name="android.widget.AdapterView"/>
 <fullyQualifiedTypeName name="com.android.beez.ui.Actionbar"/>
 <fullyQualifiedTypeName name="com.android.beez.NewsPlayer"/>
-<fullyQualifiedTypeName name="android.widget.BaseAdapter"/>
 <fullyQualifiedTypeName name="android.view.LayoutInflater"/>
 <fullyQualifiedTypeName name="com.android.beez.loadimage.ImageFetcher"/>
 <fullyQualifiedTypeName name="android.app.AlertDialog"/>
@@ -34,12 +26,9 @@
 <fullyQualifiedTypeName name="com.android.beez.adapter.NewsAdapter"/>
 <fullyQualifiedTypeName name="android.graphics.Bitmap"/>
 <fullyQualifiedTypeName name="android.graphics.drawable.BitmapDrawable"/>
-<fullyQualifiedTypeName name="com.android.beez.R.drawable"/>
-<fullyQualifiedTypeName name="android.widget.AbsListView.OnScrollListener"/>
 <fullyQualifiedTypeName name="java.util.Queue"/>
 <fullyQualifiedTypeName name="com.origamilabs.library.views.StaggeredGridView"/>
 <fullyQualifiedTypeName name="com.etsy.android.grid.StaggeredGridView"/>
-<fullyQualifiedTypeName name="com.etsy.android.grid.util.DynamicHeightImageView"/>
 <fullyQualifiedTypeName name="android.util.SparseArray"/>
 <fullyQualifiedTypeName name="java.util.Random"/>
 <fullyQualifiedTypeName name="com.android.beez.loadimage.ImageWorker.AsyncDrawable"/>
@@ -54,10 +43,21 @@
 <fullyQualifiedTypeName name="android.widget.ImageView"/>
 <fullyQualifiedTypeName name="com.android.beez.app.AppController"/>
 <fullyQualifiedTypeName name="com.android.beez.R.layout"/>
-<fullyQualifiedTypeName name="com.android.beez.R.id"/>
 <fullyQualifiedTypeName name="android.widget.Button"/>
-<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="com.android.beez.MoreContentActivity"/>
 <fullyQualifiedTypeName name="android.widget.ListView"/>
+<fullyQualifiedTypeName name="java.lang.Comparable"/>
+<fullyQualifiedTypeName name="java.util.Comparator"/>
+<fullyQualifiedTypeName name="java.util.Collections"/>
+<fullyQualifiedTypeName name="com.android.beez.adapter.FavouriteAdapter"/>
+<fullyQualifiedTypeName name="com.etsy.android.grid.util.DynamicHeightImageView"/>
 <fullyQualifiedTypeName name="com.android.beez.FavouriteActivity"/>
+<fullyQualifiedTypeName name="com.android.beez.R.drawable"/>
+<fullyQualifiedTypeName name="android.widget.ImageButton"/>
+<fullyQualifiedTypeName name="com.android.beez.R.id"/>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="android.widget.AbsListView.OnScrollListener"/>
+<fullyQualifiedTypeName name="android.widget.BaseAdapter"/>
+<fullyQualifiedTypeName name="com.android.beez.SuggestActivity"/>
+<fullyQualifiedTypeName name="com.android.beez.adapter.SuggestAdapter"/>
 </qualifiedTypeNameHistroy>

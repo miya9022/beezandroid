@@ -30,5 +30,6 @@ public class Params {
 	public static final String POST = "/post";
 	public static final String LISTPOST = "/list_post";
 	public static final String SEARCH = "/search";
+	public static final String RECOMMEND = "/recommend";
 	
 }

@@ -29,6 +29,7 @@ import com.android.beez.FavouriteActivity;
 import com.android.beez.MenuActivity;
 import com.android.beez.NewsListActivity;
 import com.android.beez.R;
+import com.android.beez.SuggestActivity;
 import com.android.beez.app.AppController;
 
 public class Slidemenu implements OnItemClickListener {
@@ -104,7 +105,8 @@ public class Slidemenu implements OnItemClickListener {
 			Intent intent = new Intent(this.parentActivity, FavouriteActivity.class);
 			parentActivity.startActivity(intent);
 		} else if("Suggest".equals(v.getTag().toString())){
-			
+			Intent intent = new Intent(this.parentActivity, SuggestActivity.class);
+			parentActivity.startActivity(intent);
 		}
 //		if ("PlayInBackground".equals(v.getTag().toString())) {
 //			// Do nothing

@@ -35,6 +35,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 public class NewsListActivity extends MenuActivity implements InterstitialAds.OnInterstitialAdsEventListener, 
@@ -51,6 +52,8 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 	private boolean isTop = true;
 	private boolean nomoreData = false;
 	private boolean isScrollUp = true;
+	private ImageButton imgb_scrolltop;
+	private int page = 0;
 	
 	private final String default_img_url = "http://beez.club/img/38x38xfavicon.png.pagespeed.ic.lvWi7wDCqW.png";
 	@Override
@@ -59,11 +62,7 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 		setContentView(R.layout.activity_menu);
         Slidemenu.getInstance().clearMenuActivity(this);
 //      GCMManager.getInstace().init(this);
-//      Actionbar.getInstance().appendTo(this);
-//		Slidemenu.getInstance().appendTo(this);
-//		Actionbar.getInstance().showSlidingMenu(View.VISIBLE);
-//		Actionbar.getInstance().showBack(View.INVISIBLE);
-        
+        // load more
         loadMore = new Button(this);
         loadMore.setText(R.string.btn_more);
 		loadMore.setBackgroundColor(R.drawable.mybutton);
@@ -74,9 +73,41 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 				//onButtonLoadMoreClick(v);
 			}
 		});
+		
+		// initiate staggered grid view
 		gridView = (com.etsy.android.grid.StaggeredGridView) findViewById(R.id.staggeredGridview);
+		gridView.addFooterView(loadMore);
         onButtonLoadMoreClick(null);
         gridView.setOnItemClickListener(this);
+        
+        // scroll to top
+        imgb_scrolltop = (ImageButton) findViewById(R.id.scroll_top);
+        imgb_scrolltop.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(imgb_scrolltop.getVisibility() != View.GONE && gridView.getFirstVisiblePosition() > 0){
+					gridView.smoothScrollToPosition(0);
+				}
+			}
+		});
+        gridView.setOnScrollListener(new OnScrollListener() {
+			
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				if(gridView.getFirstVisiblePosition() == 0){
+					imgb_scrolltop.setVisibility(View.GONE);
+				} else {
+					imgb_scrolltop.setVisibility(View.VISIBLE);
+				}
+			}
+		});
 	}
 	
 	protected void onShowListResponse(String data) {
@@ -114,10 +145,12 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 				String headline_img = item.optString(Params.HEADLINE_IMG, "NULL");
 				String time = item.optString(Params.TIME, "NULL");
 				String app_domain = item.optString(Params.APP_DOMAIN, "NULL");
+				int view = item.optInt(Params.VIEW, 0);
 				if (headline_img != null){
 					news.setHeadline_img(headline_img);
 					news.setTime(time);
 					news.setApp_domain(app_domain);
+					news.setView(view);
 				} else {
 					news.setHeadline_img(default_img_url);
 				}
@@ -152,7 +185,6 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 			@Override
 			public void onResponse(String data) {
 				onShowListResponse(data);
-				//listView.onRefreshComplete();
 				AppController.getInstance().hideProgressDialog();
 				
 			}
@@ -162,7 +194,6 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 			@Override
 			public void onErrorResponse(VolleyError arg0) {
 				onShowListErrorResponse(arg0);
-				//listView.onRefreshComplete();
 				AppController.getInstance().hideProgressDialog();
 				
 			}
@@ -186,11 +217,12 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 		Slidemenu.getInstance().appendTo(this);
 		Actionbar.getInstance().showSlidingMenu(View.VISIBLE);
 		Actionbar.getInstance().showBack(View.INVISIBLE);
-//		if (AppController.getInstance().getMusicPlayer().isNowPlaying()) {
-//			Actionbar.getInstance().showNowPlaying();
-//		} else {
-//			Actionbar.getInstance().hideNowPlaying();
-//		}
+		
+		if(gridView.getFirstVisiblePosition() == 0){
+			imgb_scrolltop.setVisibility(View.GONE);
+		} else {
+			imgb_scrolltop.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override

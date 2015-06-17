@@ -44,6 +44,10 @@
             android:name=".FavouriteActivity"
             android:label="@string/title_activity_favourite" >
         </activity>
+        <activity
+            android:name=".SuggestActivity"
+            android:label="@string/title_activity_suggest" >
+        </activity>
     </application>
 
 </manifest>

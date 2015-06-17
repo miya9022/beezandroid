@@ -76,7 +76,7 @@ public class NewsAdapter extends BaseAdapter {
 			holder.title.setText(entry.getTitle());
 			holder.time.setText(entry.getTime());
 			holder.app_domain.setText(entry.getApp_domain());
-			holder.view.setText(entry.getView()+" view");
+			holder.view.setText(entry.getView() != 0 ? entry.getView() + " view" : "NEW");
 			imageFetcher.loadImage(entry.getHeadline_img(), holder.headline_img, null);
 		} else {
 			if(view == null){
@@ -87,6 +87,7 @@ public class NewsAdapter extends BaseAdapter {
 				//holder.headline = (TextView) view.findViewById(R.id.headline);
 				holder.time = (TextView) view.findViewById(R.id.time);
 				holder.app_domain = (TextView) view.findViewById(R.id.app_domain);
+				holder.view = (TextView) view.findViewById(R.id.view);
 				view.setTag(holder);
 			} else {
 				holder = (NewsEntryHolder)view.getTag();
@@ -96,6 +97,7 @@ public class NewsAdapter extends BaseAdapter {
 			//holder.headline.setText(entry.getHeadline());
 			holder.time.setText(entry.getTime());
 			holder.app_domain.setText(entry.getApp_domain());
+			holder.view.setText(entry.getView() != 0 ? entry.getView() + " view" : "NEW");
 			double positionHeight = getPositionRatio(position);
 	        holder.gv_headline_img.setHeightRatio(positionHeight);
 	        imageFetcher.setImageSize(holder.gv_headline_img.getWidth(),(int)Math.round(positionHeight));

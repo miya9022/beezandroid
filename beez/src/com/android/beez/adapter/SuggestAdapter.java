@@ -17,11 +17,11 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
 
-import java.util.*;
-
-public class FavouriteAdapter extends BaseAdapter {
+public class SuggestAdapter extends BaseAdapter{
+	
 	private LayoutInflater inflater;
 	private ArrayList<NewsBeez> entries;
 	private int layoutResourceId;
@@ -31,7 +31,7 @@ public class FavouriteAdapter extends BaseAdapter {
 	private final Random mRandom;
 	private static final SparseArray<Double> sPositionHeightRatios = new SparseArray<Double>();
 	
-	private static final String TAG = "FavouriteAdapter";
+	private static final String TAG = "SuggestAdapter";
 	
 	@Override
 	public int getCount() {
@@ -58,26 +58,27 @@ public class FavouriteAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
-		PostsFavouriteEntryHolder holder = null;
+		PostsSuggestEntryHolder holder = null;
 		final NewsBeez entry = entries.get(position);
 		if(view == null){
 			view = inflater.inflate(this.layoutResourceId, parent, false);
-			holder = new PostsFavouriteEntryHolder();
-			holder.gv_headline_img = (DynamicHeightImageView) view.findViewById(R.id.headline_img_favourite);
-			holder.title = (TextView) view.findViewById(R.id.title_favourite);
-			holder.time = (TextView) view.findViewById(R.id.time_favourite);
-			holder.app_domain = (TextView) view.findViewById(R.id.app_domain_favourite);
-			holder.view = (TextView) view.findViewById(R.id.view_favourite);
-			holder.ranking = (TextView) view.findViewById(R.id.ranked_post);
+			holder = new PostsSuggestEntryHolder();
+			holder.gv_headline_img = (DynamicHeightImageView) view.findViewById(R.id.headline_img);
+			holder.title = (TextView) view.findViewById(R.id.title);
+			//holder.headline = (TextView) view.findViewById(R.id.headline);
+			holder.time = (TextView) view.findViewById(R.id.time);
+			holder.app_domain = (TextView) view.findViewById(R.id.app_domain);
+			holder.view = (TextView) view.findViewById(R.id.view);
 			view.setTag(holder);
 		} else {
-			holder = (PostsFavouriteEntryHolder)view.getTag();
+			holder = (PostsSuggestEntryHolder)view.getTag();
 		}
+		
 		holder.title.setText(entry.getTitle());
+		//holder.headline.setText(entry.getHeadline());
 		holder.time.setText(entry.getTime());
 		holder.app_domain.setText(entry.getApp_domain());
 		holder.view.setText(entry.getView() != 0 ? entry.getView() + " view" : "NEW");
-		holder.ranking.setText(Integer.toString(position+1));
 		double positionHeight = getPositionRatio(position);
         holder.gv_headline_img.setHeightRatio(positionHeight);
         imageFetcher.setImageSize(holder.gv_headline_img.getWidth(),(int)Math.round(positionHeight));
@@ -85,9 +86,8 @@ public class FavouriteAdapter extends BaseAdapter {
 		return view;
 	}
 	
-	static class PostsFavouriteEntryHolder{
+	static class PostsSuggestEntryHolder{
 		DynamicHeightImageView gv_headline_img;
-		//ImageView headline_img;
 		TextView title;
 		TextView headline;
 		TextView time;
@@ -110,11 +110,12 @@ public class FavouriteAdapter extends BaseAdapter {
         return (mRandom.nextDouble() / 2.0) + 1.0; // height will be 1.0 - 1.5
                                                     // the width
     }
-    
-    public FavouriteAdapter(Context context, ArrayList<NewsBeez> entries) {
+	
+	public SuggestAdapter(Context context, ArrayList<NewsBeez> entries) {
 		super();
 		this.entries = entries;
-		this.layoutResourceId = R.layout.item_gridview_favourite;
+		
+		this.layoutResourceId = R.layout.item_gridview;
 		this.context = context;
 		this.inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -165,6 +166,6 @@ public class FavouriteAdapter extends BaseAdapter {
 	public Random getmRandom() {
 		return mRandom;
 	}
-    
-    
+	
+	
 }
