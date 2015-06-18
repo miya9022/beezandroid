@@ -8,11 +8,15 @@
         <item>ホーム</item>
         <item>人気</item>
         <item>おすすめ</item>
+        <item>サイト別表示</item>
+        <item>カテゴリー別表示</item>
     </string-array>
     <string-array name="slidingmenu_item_tags">
         <item>Home</item>
         <item>Favourite</item>
         <item>Suggest</item>
+        <item>App_domain</item>
+        <item>Categories</item>
         <!--  <item>PlayInBackground</item>
         <item>InviteFriend</item>
         <item>ReviewApp</item>-->
@@ -22,6 +26,8 @@
         <item>button</item>
         <item>button</item>
         <item>button</item>
+        <item>toggle</item>
+        <item>toggle</item>
         <!-- <item>button</item> -->
     </string-array>
 </resources>

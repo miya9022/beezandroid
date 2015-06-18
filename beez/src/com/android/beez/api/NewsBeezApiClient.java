@@ -4,7 +4,6 @@ import com.android.beez.app.AppController;
 import com.android.beez.utils.Params;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
-import com.android.volley.Response.*;
 import com.android.volley.toolbox.StringRequest;
 
 import android.content.Context;
@@ -41,6 +40,18 @@ public class NewsBeezApiClient extends BaseNewsSourceApiClient {
 		sb.append(Params.RECOMMEND);
 		String apiUri = sb.toString();
 
+		StringRequest req = new StringRequest(apiUri, listener, errorListener);
+		AppController.getInstance().addToRequestQueue(req);
+		return null;
+	}
+
+	@Override
+	public String LoadDataById(Listener<String> listener,
+			ErrorListener errorListener) {
+		StringBuilder sb = new StringBuilder(this.apiBaseUrl);
+		sb.append(Params.DATA_URl);
+		String apiUri = sb.toString();
+		
 		StringRequest req = new StringRequest(apiUri, listener, errorListener);
 		AppController.getInstance().addToRequestQueue(req);
 		return null;

@@ -10,4 +10,7 @@ public interface NewsSourceApiClient {
 	public String searchByTime(String time, Listener<String> listener, Response.ErrorListener errorlistener);
 	//list recommend posts
 	public String showRecommendPosts(Listener<String> listener, Response.ErrorListener errorlistener);
+	
+	//load data(app_id, cate_id) by Id
+	public String LoadDataById(Listener<String> listener, Response.ErrorListener errorlistener);
 }

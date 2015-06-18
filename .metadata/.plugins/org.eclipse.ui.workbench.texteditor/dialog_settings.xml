@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="smoothScrollTo" key="selection"/>
+		<item value="slidingmenu_item_toggle" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="slidingmenu_item_toggle"/>
 			<item value="smoothScrollTo"/>
 			<item value="smoothScroll"/>
 			<item value="smoothScrollToPosition"/>
@@ -15,7 +16,6 @@
 			<item value="smoo"/>
 			<item value="New"/>
 			<item value="msg_now"/>
-			<item value="msg_noew"/>
 		</list>
 		<list key="replacehistory">
 			<item value="android.beez"/>

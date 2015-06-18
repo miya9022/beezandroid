@@ -2,6 +2,9 @@ package com.android.beez.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
+
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,7 +34,14 @@ import com.android.beez.MenuActivity;
 import com.android.beez.NewsListActivity;
 import com.android.beez.R;
 import com.android.beez.SuggestActivity;
+import com.android.beez.adapter.DomainItemAdapter;
+import com.android.beez.api.NewsSourceApiClient;
 import com.android.beez.app.AppController;
+import com.android.beez.model.NewsBeez;
+import com.android.beez.utils.Params;
+import com.android.beez.utils.ShowMessage;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 public class Slidemenu implements OnItemClickListener {
 	private static Slidemenu instance = null;
@@ -107,7 +118,7 @@ public class Slidemenu implements OnItemClickListener {
 		} else if("Suggest".equals(v.getTag().toString())){
 			Intent intent = new Intent(this.parentActivity, SuggestActivity.class);
 			parentActivity.startActivity(intent);
-		}
+		} 
 //		if ("PlayInBackground".equals(v.getTag().toString())) {
 //			// Do nothing
 //		} else if ("InviteFriend".equals(v.getTag().toString())) {
@@ -163,6 +174,7 @@ public class Slidemenu implements OnItemClickListener {
 
 	private class SlidemenuAdapter extends BaseAdapter {
 		private LayoutInflater inflater;
+		private String dataType;
 
 		private class MenuItem {
 			public final static int TYPE_TOGGLE = 1;
@@ -250,7 +262,7 @@ public class Slidemenu implements OnItemClickListener {
 			View view = convertView;
 			SlidingmenuItemHolder holder = null;
 
-			MenuItem item = data.get(position);
+			final MenuItem item = data.get(position);
 
 			if (view == null) {
 				holder = new SlidingmenuItemHolder();
@@ -259,43 +271,30 @@ public class Slidemenu implements OnItemClickListener {
 						.findViewById(R.id.slidingmenu_item_text);
 				holder.image = (ImageView) view
 						.findViewById(R.id.slidingmenu_item_thumb);
-				
-				if(item.getType() == MenuItem.TYPE_BUTTON){
-					
+				holder.toggle = (ToggleButton) view
+						.findViewById(R.id.slidingmenu_item_toggle);
+				holder.gridview = (GridView) view
+						.findViewById(R.id.app_domain_gv);
+				if (item.getType() == MenuItem.TYPE_TOGGLE) {
+					holder.toggle.setVisibility(View.VISIBLE);
+					holder.gridview.setVisibility(View.VISIBLE);
+				} else {
+					holder.toggle.setVisibility(View.GONE);
 				}
 				
-//				holder.toggle = (ToggleButton) view
-//						.findViewById(R.id.slidingmenu_item_toggle);
-//				holder.check = (CheckBox) view
-//						.findViewById(R.id.slidingmenu_item_check);
-
-//				if (item.getType() == MenuItem.TYPE_TOGGLE) {
-//					holder.toggle.setVisibility(View.VISIBLE);
-//					holder.check.setVisibility(View.GONE);
-//					holder.toggle
-//							.setOnClickListener(new View.OnClickListener() {
-//								@Override
-//								public void onClick(View v) {
-//									boolean val = ((ToggleButton) v)
-//											.isChecked();
-//
-//									SharedPreferences shared = AppController
-//											.getInstance()
-//											.getSharedPreferences();
-//									Editor e = shared.edit();
-//									e.putBoolean(((ToggleButton) v).getTag()
-//											.toString(), val);
-//									e.commit();
-//								}
-//							});
-//				} else if (item.getType() == MenuItem.TYPE_CHECK) {
-//					holder.toggle.setVisibility(View.GONE);
-//					holder.check.setVisibility(View.VISIBLE);
-//				} else {
-//					holder.toggle.setVisibility(View.GONE);
-//					holder.check.setVisibility(View.GONE);
-//				}
-
+				holder.toggle.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						boolean val = ((ToggleButton) v).isChecked();
+						if(val == false){
+							if("App_domain".equals(item.getTag())){
+								
+							} else if("Categories".equals(item.getTag())){
+								
+							}
+						}
+					}
+				});
 				view.setTag(holder);
 			} else {
 				holder = (SlidingmenuItemHolder) view.getTag();
@@ -322,11 +321,65 @@ public class Slidemenu implements OnItemClickListener {
 			return view;
 		}
 	}
+	
+	protected static class DataFilter {
+		protected static void onLoadData(View view){
+			NewsSourceApiClient apiClient = AppController.getInstance().getNewsApiClient();
+			apiClient.LoadDataById(new Response.Listener<String>() {
+
+				@Override
+				public void onResponse(String data) {
+					
+				}
+				
+			}, new Response.ErrorListener() {
+
+				@Override
+				public void onErrorResponse(VolleyError arg0) {
+					
+				}
+				
+			});
+		}
+		
+		protected static void onShowDataResponse(String data, String dataType){
+			try{
+				JSONObject jsonObject = new JSONObject(data);
+				String code = jsonObject.getString("code");
+				if(Params.ERROR_10010.equals(code)){
+					ShowMessage.showDialogUpdateApp(null);
+					return;
+				}
+				if (!"OK".equals(code)) {
+					return;
+				}
+				
+				String strData = jsonObject.getString(Params.DATA);
+				if(strData == null){
+					return;
+				}
+				
+				String strCategory = jsonObject.getString(Params.CATEGORY);
+				if(strCategory == null){
+					return;
+				}
+				
+				String strSite = jsonObject.getString(Params.SITE);
+				if(strSite == null){
+					return;
+				}
+				
+			} catch(Exception ex){
+				ex.printStackTrace();
+			}
+		}
+	}
 
 	private static class SlidingmenuItemHolder {
 		TextView text;
 		ImageView image;
-//		ToggleButton toggle;
+		ToggleButton toggle;
+		GridView gridview;
 		CheckBox check;
 	}
 }

@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -29,11 +30,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.MeasureSpec;
+import android.view.View.OnTouchListener;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class ViewContentActivity extends MenuActivity {
@@ -44,6 +53,7 @@ public class ViewContentActivity extends MenuActivity {
 	private NewsAdapter adapter;
 	private String app_domain_display;
 	private String title_displayed;
+	private int listViewHeight = 0;
 	
 	//view holders
 	private ImageView iv_headline_img;
@@ -54,6 +64,8 @@ public class ViewContentActivity extends MenuActivity {
 	private TextView tv_view;
 	private ImageFetcher ifetcher;
 	private Button bt_viewmore;
+	private ScrollView scrollView;
+	private LinearLayout header_layout;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +76,7 @@ public class ViewContentActivity extends MenuActivity {
 		init(intent);
 		
 		listView = (ListView) findViewById(R.id.listview);
+		scrollView = (ScrollView) findViewById(R.id.scroll_view_list);
 		onLoadPostsByAppDomain(null);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -81,7 +94,33 @@ public class ViewContentActivity extends MenuActivity {
 				startActivity(i);
 			}
 		});
+		
+		listView.setOnTouchListener(new OnTouchListener() {
+
+		    @SuppressLint("ClickableViewAccessibility") 
+		    public boolean onTouch(View v, MotionEvent event) {
+		        return (event.getAction() == MotionEvent.ACTION_MOVE);
+		    }
+		});
+		
+		
+		header_layout = (LinearLayout) findViewById(R.id.header_layout);
+	    
+	    
 	}
+
+//	protected int getActualHeightOfListView(ListView lv){
+//		NewsAdapter LvAdapter = (NewsAdapter) lv.getAdapter();
+//		int listViewActualHeight = 0;
+//	    for (int i = 0; i < LvAdapter.getCount(); i++) {
+//	        View mView = LvAdapter.getView(i, null, lv);
+//	        mView.measure(
+//	                MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+//	                MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+//	        listViewActualHeight += mView.getMeasuredHeight();
+//	    }
+//	    return listViewActualHeight;
+//	}
 	
 	protected void init(Intent intent){
 		
@@ -123,7 +162,7 @@ public class ViewContentActivity extends MenuActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(ViewContentActivity.this, MoreContentActivity.class);
-				
+				// TODO: anhnt
 				startActivity(intent);
 			}
 		});
@@ -203,8 +242,18 @@ public class ViewContentActivity extends MenuActivity {
 			} else {
 				if (newsList.size() > 0) {
 					adapter.getEntries().addAll(newsList);
+					adapter.notifyDataSetChanged();
 				}
 			}
+			
+			for (int i = 0; i < adapter.getCount(); i++) {
+		        View mView = adapter.getView(i, null, listView);
+		        mView.measure(
+		                MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+		                MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+		        listViewHeight += mView.getMeasuredHeight();
+		    }
+			scrollView.setMinimumHeight(listViewHeight+header_layout.getHeight());
 		} catch(Exception ex){
 			ex.printStackTrace();
 			nomoreData = true;

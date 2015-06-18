@@ -70,7 +70,7 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 		loadMore.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//onButtonLoadMoreClick(v);
+				onButtonLoadMoreClick(v);
 			}
 		});
 		
@@ -87,7 +87,7 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 			@Override
 			public void onClick(View v) {
 				if(imgb_scrolltop.getVisibility() != View.GONE && gridView.getFirstVisiblePosition() > 0){
-					gridView.smoothScrollToPosition(0);
+					if(adapter != null) gridView.setAdapter(adapter); 
 				}
 			}
 		});
@@ -101,6 +101,9 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
+				if(firstVisibleItem + visibleItemCount >= totalItemCount){
+		            
+		        }
 				if(gridView.getFirstVisiblePosition() == 0){
 					imgb_scrolltop.setVisibility(View.GONE);
 				} else {
@@ -108,6 +111,8 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 				}
 			}
 		});
+        
+        if(nomoreData) loadMore.setVisibility(View.GONE);
 	}
 	
 	protected void onShowListResponse(String data) {
@@ -138,31 +143,39 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 				return;
 			}
 			newsList = new ArrayList<NewsBeez>();
-			for (int i = 0; i < jsonItems.length(); i++) {
-				JSONObject item = jsonItems.getJSONObject(i);
-				JSON2Object j2o = new JSON2Object(NewsBeez.class, item);
-				NewsBeez news = (NewsBeez) j2o.parse();
-				String headline_img = item.optString(Params.HEADLINE_IMG, "NULL");
-				String time = item.optString(Params.TIME, "NULL");
-				String app_domain = item.optString(Params.APP_DOMAIN, "NULL");
-				int view = item.optInt(Params.VIEW, 0);
-				if (headline_img != null){
-					news.setHeadline_img(headline_img);
-					news.setTime(time);
-					news.setApp_domain(app_domain);
-					news.setView(view);
-				} else {
-					news.setHeadline_img(default_img_url);
+			int current_length = (jsonItems.length() < concurrent + quota_display) ? jsonItems.length() : concurrent + quota_display;
+			if(nomoreData == false){
+				for (int i = concurrent; i < current_length; i++) {
+					JSONObject item = jsonItems.getJSONObject(i);
+					JSON2Object j2o = new JSON2Object(NewsBeez.class, item);
+					NewsBeez news = (NewsBeez) j2o.parse();
+					String headline_img = item.optString(Params.HEADLINE_IMG, "NULL");
+					String time = item.optString(Params.TIME, "NULL");
+					String app_domain = item.optString(Params.APP_DOMAIN, "NULL");
+					int view = item.optInt(Params.VIEW, 0);
+					if (headline_img != null){
+						news.setHeadline_img(headline_img);
+						news.setTime(time);
+						news.setApp_domain(app_domain);
+						news.setView(view);
+					} else {
+						news.setHeadline_img(default_img_url);
+					}
+					
+					if(newsList.size() < quota_display){
+						newsList.add(news);
+					}
+					nomoreData = (i == jsonItems.length()-1) ? true: false;
 				}
-				newsList.add(news);
 			}
-			//concurrent += quota_display;
+			concurrent = (nomoreData == false) ? current_length : 0;
 			if(adapter == null){
 				adapter = new NewsAdapter(this, newsList, false);
 				gridView.setAdapter(adapter); 
 			} else {
 				if (newsList.size() > 0) {
 					adapter.getEntries().addAll(newsList);
+					adapter.notifyDataSetChanged();
 				}
 			}
 		} catch(Exception ex){
@@ -170,6 +183,7 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 			nomoreData = true;
 			loadMore.setVisibility(View.GONE);
 		}
+		if(nomoreData == true) loadMore.setVisibility(View.GONE);
 	}
 	
 	protected void onShowListErrorResponse(VolleyError error) {

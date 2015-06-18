@@ -1,11 +1,14 @@
 package com.android.beez.utils;
 
 public class Params {
+	// json objects
 	public static final String CODE = "code";
 	public static final String OK = "OK";
 	public static final String ERROR_10010="10010";
 	public static final String MESSAGE = "message";
 	public static final String DATA = "data";
+	public static final String CATEGORY = "category";
+	public static final String SITE = "site";
 	
 	//main attributes
 	public static final String ID = "id";
@@ -31,5 +34,6 @@ public class Params {
 	public static final String LISTPOST = "/list_post";
 	public static final String SEARCH = "/search";
 	public static final String RECOMMEND = "/recommend";
+	public static final String DATA_URl = "/data";
 	
 }

@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.security.MessageDigest"/>
-<fullyQualifiedTypeName name="java.security.NoSuchAlgorithmException"/>
-<fullyQualifiedTypeName name="com.android.volley.toolbox.StringRequest"/>
-<fullyQualifiedTypeName name="android.widget.AdapterView"/>
-<fullyQualifiedTypeName name="com.android.beez.ui.Actionbar"/>
-<fullyQualifiedTypeName name="com.android.beez.NewsPlayer"/>
-<fullyQualifiedTypeName name="android.view.LayoutInflater"/>
-<fullyQualifiedTypeName name="com.android.beez.loadimage.ImageFetcher"/>
-<fullyQualifiedTypeName name="android.app.AlertDialog"/>
-<fullyQualifiedTypeName name="android.widget.TextView"/>
-<fullyQualifiedTypeName name="com.android.beez.adapter.NewsAdapter.NewsEntryHolder"/>
-<fullyQualifiedTypeName name="com.android.beez.R"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="com.android.beez.model.NewsBeez"/>
 <fullyQualifiedTypeName name="com.android.beez.api.NewsSourceApiClient"/>
-<fullyQualifiedTypeName name="com.android.volley.Response.Listener"/>
-<fullyQualifiedTypeName name="com.android.volley.Response.ErrorListener"/>
-<fullyQualifiedTypeName name="com.android.volley.Response"/>
 <fullyQualifiedTypeName name="org.json.JSONObject"/>
 <fullyQualifiedTypeName name="com.android.beez.utils.ShowMessage"/>
 <fullyQualifiedTypeName name="org.json.JSONArray"/>
@@ -54,10 +38,26 @@
 <fullyQualifiedTypeName name="com.android.beez.FavouriteActivity"/>
 <fullyQualifiedTypeName name="com.android.beez.R.drawable"/>
 <fullyQualifiedTypeName name="android.widget.ImageButton"/>
-<fullyQualifiedTypeName name="com.android.beez.R.id"/>
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.widget.AbsListView.OnScrollListener"/>
-<fullyQualifiedTypeName name="android.widget.BaseAdapter"/>
 <fullyQualifiedTypeName name="com.android.beez.SuggestActivity"/>
 <fullyQualifiedTypeName name="com.android.beez.adapter.SuggestAdapter"/>
+<fullyQualifiedTypeName name="android.view.MotionEvent"/>
+<fullyQualifiedTypeName name="android.view.View.OnTouchListener"/>
+<fullyQualifiedTypeName name="android.widget.ScrollView"/>
+<fullyQualifiedTypeName name="android.widget.LinearLayout"/>
+<fullyQualifiedTypeName name="android.view.ViewTreeObserver.OnGlobalLayoutListener"/>
+<fullyQualifiedTypeName name="android.view.View.MeasureSpec"/>
+<fullyQualifiedTypeName name="android.widget.ListAdapter"/>
+<fullyQualifiedTypeName name="android.widget.GridView"/>
+<fullyQualifiedTypeName name="com.android.beez.ui.Slidemenu.SlidemenuAdapter.AppItemAdapter"/>
+<fullyQualifiedTypeName name="android.widget.BaseAdapter"/>
+<fullyQualifiedTypeName name="com.android.beez.adapter.DomainItemAdapter"/>
+<fullyQualifiedTypeName name="com.android.volley.Response.Listener"/>
+<fullyQualifiedTypeName name="com.android.volley.Response"/>
+<fullyQualifiedTypeName name="com.android.volley.Response.ErrorListener"/>
+<fullyQualifiedTypeName name="com.android.beez.adapter.DomainItemAdapter.DomainEntryHolder"/>
+<fullyQualifiedTypeName name="com.android.beez.R.id"/>
+<fullyQualifiedTypeName name="java.io.Serializable"/>
+<fullyQualifiedTypeName name="com.android.beez.model.AppDomainBeez"/>
 </qualifiedTypeNameHistroy>

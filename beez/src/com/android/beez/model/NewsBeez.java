@@ -3,19 +3,23 @@ package com.android.beez.model;
 import java.io.Serializable;
 
 public class NewsBeez implements Serializable {
-	public String id;
-	public String title;
-	public String headline;
-	public String headline_img;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 754189098001845039L;
+	private String id;
+	private String title;
+	private String headline;
+	private String headline_img;
 	
-	public String origin_url;
-	public String app_domain;
-	public String cate_id;
-	public String short_link;
-	public String time;
+	private String origin_url;
+	private String app_domain;
+	private String cate_id;
+	private String short_link;
+	private String time;
 	
-	public int rank;
-	public int view = 0;
+	private int rank;
+	private int view = 0;
 		
 	public NewsBeez() {
 		super();

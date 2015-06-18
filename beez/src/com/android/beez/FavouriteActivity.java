@@ -99,7 +99,7 @@ public class FavouriteActivity extends MenuActivity implements AbsListView.OnIte
 
 						@Override
 						public int compare(NewsBeez lhs, NewsBeez rhs) {
-							return rhs.view - lhs.view;
+							return rhs.getView() - lhs.getView();
 						}
 						
 					});
