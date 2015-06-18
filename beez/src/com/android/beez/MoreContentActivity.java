@@ -1,8 +1,14 @@
 package com.android.beez;
 
+import com.android.beez.api.ServiceHandler;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,8 +37,10 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.analytics.GoogleAnalytics;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface.OnShowListener;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -40,78 +48,48 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 public class MoreContentActivity extends MenuActivity {
-	private boolean noMoreData = false;
-	
-	protected void verificationSuccess(JSONObject data) {
-		try {
-			JSONObject j2o = data;
-			String code = j2o.getString("code");
-			if(Params.ERROR_10010.equals(code)){
-				ShowMessage.showDialogUpdateApp(this);
-				return;
-			}if(!"OK".equals(code)){
-				noMoreData = true;
-				return;
-			}
-			
-			String strData = j2o.getString(Params.DATA);
-			if(strData == null){
-				noMoreData = true;
-				return;
-			}
-			Log.d("anhntcheck",strData);
-			
-			
-		
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	protected void verificationFailed(VolleyError data) {
-		
-	}
-	
+	private String id = "19333";
+	private String url="http://stagingbeez.codelovers.vn/api/api/post/post";
+	private ProgressDialog pDialog;
+	private static final String TAG_CODE = "code";
+	private static final String TAG_POST = "Post";
+	private static final String TAG_POST_RELATED = "post_related";
+	private static final String TAG_MESSAGE = "message";
+	private static final String TAG_DATA = "data";
+	private String shortLink;
+	private String jsonStr;
+	private String code;
+	private String message;
+//	private JSONArray data;
+	private String post_related;
+	private BeezPost beezPost;
+	private List<NewsBeez> newsBeez;
+	Intent intent;
+	WebView webview;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_more_content);
 		Slidemenu.getInstance().clearMenuActivity(this);
-//		RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-		JSONObject obj = new JSONObject();
-		try {
-			obj.put("id", "19333");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST,"http://stagingbeez.codelovers.vn/api/api/post/post",obj,
-			    new Response.Listener<JSONObject>() {
-			        @Override
-			        public void onResponse(JSONObject response) {
-			             Log.d("anhntcheck",response.toString());
-			        }
-			    },
-			    new Response.ErrorListener() {
-			        @Override
-			        public void onErrorResponse(VolleyError error) {
-			              Log.e("anhntcheck",error.toString());
-			        }
-			    });
+		intent = getIntent();
+		init(intent);
+		new GetContacts().execute();
 
-//		requestQueue.add(jsObjRequest);
-//		
-	}
-
-	private void init(Intent intent) {
-		WebView webview = (WebView) findViewById(R.id.webView);
-		String id = intent.getStringExtra(Params.ID);
-		String customHtml = "       <h2>\\\n            <span data-bind=\"text: ($index()   1) &amp;#039;. &amp;#039;\">1. <\\/span>\\\n            <span data-bind=\"text: image_title\">Three Lucky Bastards Who Aren&amp;#039;t You Win The Powerball <\\/span>\\\n        <\\/h2>\\\n        <img class=\"img-responsive\" data-bind=\"attr: { src: image_src }\" src=\"\">\\\n            <div data-bind=\"if: type() == &amp;#039;from_file&amp;#039;\"><\\/div>    \\\n            <div data-bind=\"if: type() == &amp;#039;from_url&amp;#039;\">\\\n                <img class=\"img-responsive\" data-bind=\"attr: { src: from_url() },visible: from_url()\" src=\"http:\\/\\/r2-store.distractify.netdna-cdn.com\\/postimage\\/201502\\/7\\/69a10713161ceaa726ce9df04baf14e1_650x.jpg\">\\\n            <\\/div>\\\n            <div data-bind=\"if: type() == &amp;#039;youtube&amp;#039;\"><\\/div>\\\n        <p data-bind=\"text: image_caption\">After swelling to roughly 564 million the Powerball bubble finally burst last night when three lucky winners picked the winning numbers. The winning tickets were sold in North Carolina, Texas, and Puerto Rico which means Puerto Rico can finally afford to become a state.<\\/p>     \\\n        <h2>\\\n            <span data-bind=\"text: ($index()   1) &amp;#039;. &amp;#039;\">2. <\\/span>\\\n            <span data-bind=\"text: image_title\">Obama Asks Congress For War Powers To Fight ISIS <\\/span>\\\n        <\\/h2>\\\n        <img class=\"img-responsive\" data-bind=\"attr: { src: image_src }\" src=\"\">\\\n            <div data-bind=\"if: type() == &amp;#039;from_file&amp;#039;\"><\\/div>    \\\n            <div data-bind=\"if: type() == &amp;#039;from_url&amp;#039;\">\\\n                <img class=\"img-responsive\" data-bind=\"attr: { src: from_url() },visible: from_url()\" src=\"http:\\/\\/r2-store.distractify.netdna-cdn.com\\/postimage\\/201502\\/7\\/025cb0bf9419ba3edea60824e5ac4bfa_650x.png\">\\\n            <\\/div>\\\n            <div data-bind=\"if: type() == &amp;#039;youtube&amp;#039;\"><\\/div>\\\n        <p data-bind=\"text: image_caption\">Obama sent a request to Congress yesterday for formal authorization to fight ISIS\\/ISIL, the Islamic extremist group in Syria and Iraq. This would obviously be number one on the list if not for the fact that the war powers are retroactive. The U.S. has already been bombing ISIS for 6 months.<\\/p>     \\\n        <h2>\\\n            <span data-bind=\"text: ($index()   1) &amp;#039;. &amp;#039;\">3. <\\/span>\\\n            <span data-bind=\"text: image_title\">Bored New Hampshire Cops Want To Arrest Punxatawney Phil <\\/span>\\\n        <\\/h2>\\\n        <img class=\"img-responsive\" data-bind=\"attr: { src: image_src }\" src=\"\">\\\n            <div data-bind=\"if: type() == &amp;#039;from_file&amp;#039;\"><\\/div>    \\\n            <div data-bind=\"if: type() == &amp;#039;from_url&amp;#039;\">\\\n                <img class=\"img-responsive\" data-bind=\"attr: { src: from_url() },visible: from_url()\" src=\"https:\\/\\/fbcdn-sphotos-a-a.akamaihd.net\\/hphotos-ak-xpa1\\/v\\/t1.0-9\\/10256117_795387120535945_2367062496297207506_n.jpg?oh=e4bc49a99813125559a1f681277a4e5d&amp;amp;oe=555456F0&amp;amp;__gda__=1435333704_89c21e4eae87f22c63c434ef51a62cfb\">\\\n            <\\/div>\\\n            <div data-bind=\"if: type() == &amp;#039;youtube&amp;#039;\"><\\/div>\\\n        <p data-bind=\"text: image_caption\">Police in Merrimack New Hampshire have issued a “warrant” for the arrest of Punxatawney Phil, groundhog prognosticator extraordinaire, citing excessive snowfalls. Nevermind that Phil’s home of Gobbler’s Knob, PA is well outside of the the New Hampshire cops’ jurisdiction, and that animal prison doesn’t exist, let’s remember that a long winter is exactly what Phil predicted. Don’t hate the groundhog hombres, hate the game.<\\/p>     \\\n        <h2>\\\n            <span data-bind=\"text: ($index()   1) &amp;#039;. &amp;#039;\">4. <\\/span>\\\n            <span data-bind=\"text: image_title\">Congress Passes Keystone XL Pipeline Legislation<\\/span>\\\n        <\\/h2>\\\n        <img class=\"img-responsive\" data-bind=\"attr: { src: image_src }\" src=\"\">\\\n            <div data-bind=\"if: type() == &amp;#039;from_file&amp;#039;\"><\\/div>    \\\n            <div data-bind=\"if: type() == &amp;#039;from_url&amp;#039;\">\\\n                <img class=\"img-responsive\" data-bind=\"attr: { src: from_url() },visible: from_url()\" src=\"http:\\/\\/r2-store.distractify.netdna-cdn.com\\/postimage\\/201502\\/7\\/0733918d058d4ed15e868465a687f00f_650x.jpg\">\\\n            <\\/div>\\\n            <div data-bind=\"if: type() == &amp;#039;youtube&amp;#039;\"><\\/div>\\\n        <p data-bind=\"text: image_caption\">The House of Representatives passed legislation Wednesday approving construction of the controversial Keystone XL pipeline. The current bill has already been approved by the Senate and will go to President Obama who is expected to veto the measure which has faced fierce opposition from environmental groups.<\\/p>     \\\n        <h2>\\\n            <span data-bind=\"text: ($index()   1) &amp;#039;. &amp;#039;\">5. <\\/span>\\\n            <span data-bind=\"text: image_title\">Bob Simon of CBS News Dies In Car Crash<\\/span>\\\n        <\\/h2>\\\n        <img class=\"img-responsive\" data-bind=\"attr: { src: image_src }\" src=\"\">\\\n            <div data-bind=\"if: type() == &amp;#039;from_file&amp;#039;\"><\\/div>    \\\n            <div data-bind=\"if: type() == &amp;#039;from_url&amp;#039;\">\\\n                <img class=\"img-responsive\" data-bind=\"attr: { src: from_url() },visible: from_url()\" src=\"http:\\/\\/r2-store.distractify.netdna-cdn.com\\/postimage\\/201502\\/7\\/b5a20ad37fd7c6522bfa2f067bc5cb98_650x.jpg\">\\\n            <\\/div>\\\n            <div data-bind=\"if: type() == &amp;#039;youtube&amp;#039;\"><\\/div>\\\n        <p data-bind=\"text: image_caption\">Longtime CBS News reporter and “60 Minutes” correspondent Bob Simon has died following a car crash. The 73 year-old journalist was reportedly a passenger when his car collided with another vehicle at a stop light. It’s suspected that the driver of Simon’s vehicle may have had a heart attack, leading to the tragedy.<\\/p>     \\\n";
-		webview.loadData(customHtml, "text/html", "UTF-8");
 		
+	}
+	private void init(Intent intent){
+		 id = intent.getStringExtra(Params.ID);
+		 webview = (WebView)findViewById(R.id.webView);
+		 webview.getSettings().setDefaultTextEncodingName("utf-8");       
+		 webview.getSettings().setJavaScriptEnabled(true);
+		 
+		 
+//		 Toast.makeText(getApplicationContext(), id, Toast.LENGTH_LONG).show();
 	}
 
 	@Override
@@ -130,5 +108,103 @@ public class MoreContentActivity extends MenuActivity {
 		Slidemenu.getInstance().appendTo(this);
 		Actionbar.getInstance().showSlidingMenu(View.VISIBLE);
 		Actionbar.getInstance().showBack(View.INVISIBLE);
+	}
+	
+	/**
+	 * Async task class to get json by making HTTP call
+	 * */
+	private class GetContacts extends AsyncTask<Void, Void, Void> {
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			// Showing progress dialog
+//			pDialog = new ProgressDialog(MoreContentActivity.this);
+//			pDialog.setMessage("Please wait...");
+//			pDialog.setCancelable(false);
+//			pDialog.show();
+
+		}
+
+		@Override
+		protected Void doInBackground(Void... arg0) {
+			// Creating service handler class instance
+			ServiceHandler sh = new ServiceHandler();
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair(Params.ID, id));
+			// Making a request to url and getting response
+			jsonStr = sh.makeServiceCall(url, ServiceHandler.POST,params);
+			Log.d("Response: ", "> " + jsonStr);
+			if (jsonStr != null) {
+				try {
+					JSONObject jsonObj = new JSONObject(jsonStr);
+					JSONObject data  = jsonObj.getJSONObject(TAG_DATA);
+					JSONObject post = data.getJSONObject(TAG_POST);
+					JSONArray post_releated = data.getJSONArray(TAG_POST_RELATED);
+					beezPost = new BeezPost();
+					beezPost.setId(post.getString(BeezPost.TAG_ID));
+					beezPost.setTitle(post.getString(BeezPost.TAG_TITLE));
+					beezPost.setHeadline(post.getString(BeezPost.TAG_HEADLINE));
+					beezPost.setHeadline_img(post.getString(BeezPost.TAG_HEADLINE_IMG));
+					beezPost.setCheck_img(post.getString(BeezPost.TAG_CHECK_IMG));
+					beezPost.setOrigin_url(post.getString(BeezPost.TAG_ORIGIN_URL));
+					beezPost.setShort_link(post.getString(BeezPost.TAG_SHORT_LINK));
+					beezPost.setPost_id(post.getString(BeezPost.TAG_POST_ID));
+					beezPost.setCate_id(post.getString(BeezPost.TAG_CATE_ID));
+					beezPost.setCate_updated(post.getString(BeezPost.TAG_CATE_UPDATED));
+					beezPost.setOrigin_pv(post.getString(BeezPost.TAG_ORIGIN_PV));
+					beezPost.setRemark(post.getString(BeezPost.TAG_REMARK));
+					beezPost.setPv(post.getString(BeezPost.TAG_PV));
+					beezPost.setGod_pv(post.getString(BeezPost.TAG_GOD_PV));
+					beezPost.setCt(post.getString(BeezPost.TAG_CT));
+					beezPost.setTags(post.getString(BeezPost.TAG_TAGS));
+					beezPost.setApp_id(post.getString(BeezPost.TAG_APP_ID));
+					beezPost.setApp_domain(post.getString(BeezPost.TAG_APP_DOMAIN));
+					beezPost.setFlag_recommend(post.getString(BeezPost.TAG_FLAG_RECOMMEND));
+					beezPost.setRecommend_created(post.getString(BeezPost.TAG_RECOMMEND_CREATED));
+					beezPost.setOrigin_post_date(post.getString(BeezPost.TAG_ORIGIN_POST_DATE));
+					beezPost.setCreated(post.getString(BeezPost.TAG_CREATED));
+					beezPost.setImg_content(post.getString(BeezPost.TAG_IMG_CONTENT));
+					beezPost.setContent(post.getString(BeezPost.TAG_CONTENT));
+					beezPost.setFooter_text(post.getString(BeezPost.TAG_FOOTER_TEXT));
+					beezPost.setRss_time(post.getString(BeezPost.TAG_RSS_TIME));
+					beezPost.setStatus(post.getString(BeezPost.TAG_STATUS));
+					beezPost.setFb_shared(post.getString(BeezPost.TAG_FB_SHARED));
+					beezPost.setPost_type(post.getString(BeezPost.TAG_POST_TYPE));
+					
+					newsBeez = new ArrayList<NewsBeez>();
+					for(int i=0;i<post_releated.length();i++){
+						NewsBeez tempNewBeez = new NewsBeez();
+						JSONObject tempPost = post_releated.getJSONObject(i);
+						tempNewBeez.setId(tempPost.getString("id"));
+						tempNewBeez.setTitle(tempPost.getString("title"));
+						tempNewBeez.setHeadline(tempPost.getString("headline"));
+						tempNewBeez.setHeadline_img(tempPost.getString("headline_img"));
+						tempNewBeez.setOrigin_url(tempPost.getString("origin_url"));
+						tempNewBeez.setApp_domain(tempPost.getString("app_domain"));
+						tempNewBeez.setCate_id(tempPost.getString("cate_id"));
+						tempNewBeez.setShort_link(tempPost.getString("short_link"));
+						tempNewBeez.setTime(tempPost.getString("time"));
+						tempNewBeez.setView(tempPost.getInt("view"));
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			} else {
+				Log.e("ServiceHandler", "Couldn't get any data from the url");
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			if(beezPost.getApp_id().equals("beez"))
+				webview.loadData(beezPost.getContent(), "text/html; charset=utf-8",null);
+			else
+				webview.loadUrl(intent.getStringExtra(Params.ORIGIN_URL));
+//				
+		}
+
 	}
 }

@@ -1,6 +1,36 @@
 package com.android.beez.model;
 
 public class BeezPost {
+	public static final String TAG_ID = "id";
+	public static final String TAG_TITLE = "title";
+	public static final String TAG_HEADLINE = "headline";
+	public static final String TAG_HEADLINE_IMG = "headline_img";
+	public static final String TAG_CHECK_IMG = "check_img";
+	public static final String TAG_ORIGIN_URL = "origin_url";
+	public static final String TAG_SHORT_LINK = "short_link";
+	public static final String TAG_POST_ID = "post_id";
+	public static final String TAG_CATE_ID = "cate_id";
+	public static final String TAG_CATE_UPDATED = "cat_updated";
+	public static final String TAG_ORIGIN_PV = "origin_pv";
+	public static final String TAG_REMARK = "remark";
+	public static final String TAG_PV = "pv";
+	public static final String TAG_GOD_PV = "god_pv";
+	public static final String TAG_CT = "ct";
+	public static final String TAG_TAGS = "tags";
+	public static final String TAG_APP_ID = "app_id";
+	public static final String TAG_APP_DOMAIN = "app_domain";
+	public static final String TAG_FLAG_RECOMMEND = "flag_recommend";
+	public static final String TAG_RECOMMEND_CREATED = "recommend_created";
+	public static final String TAG_ORIGIN_POST_DATE = "origin_post_date";
+	public static final String TAG_CREATED = "created";
+	public static final String TAG_IMG_CONTENT = "img_content";
+	public static final String TAG_CONTENT = "content";
+	public static final String TAG_FOOTER_TEXT = "footer_text";
+	public static final String TAG_RSS_TIME = "rss_time";
+	public static final String TAG_STATUS = "status";
+	public static final String TAG_FB_SHARED = "fb_shared";
+	public static final String TAG_POST_TYPE = "post_type";
+
 	private String id;
 	private String title;
 	private String headline;

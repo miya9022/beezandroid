@@ -47,7 +47,7 @@ public class ViewContentActivity extends MenuActivity {
 	private NewsAdapter adapter;
 	private String app_domain_display;
 	private String title_displayed;
-	
+	private String origin_url;
 	//view holders
 	private ImageView iv_headline_img;
 	private TextView tv_title;
@@ -57,6 +57,7 @@ public class ViewContentActivity extends MenuActivity {
 	private TextView tv_view;
 	private ImageFetcher ifetcher;
 	private Button bt_viewmore;
+	private String post_id;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +94,9 @@ public class ViewContentActivity extends MenuActivity {
 		String headline_img = intent.getStringExtra(Params.HEADLINE_IMG);
 		String app_domain = intent.getStringExtra(Params.APP_DOMAIN);
 		String time = intent.getStringExtra(Params.TIME);
-		
+		origin_url = intent.getStringExtra(Params.ORIGIN_URL);
+		post_id = intent.getStringExtra(Params.ID);
+		Toast.makeText(getApplicationContext(), post_id, Toast.LENGTH_LONG).show();
 		int view = intent.getIntExtra(Params.VIEW, 0);
 		if(!app_domain.isEmpty()){
 			app_domain_display = app_domain;
@@ -126,7 +129,8 @@ public class ViewContentActivity extends MenuActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(ViewContentActivity.this, MoreContentActivity.class);
-				
+				intent.putExtra(Params.ID, post_id);
+				intent.putExtra(Params.ORIGIN_URL,origin_url);
 				startActivity(intent);
 			}
 		});
