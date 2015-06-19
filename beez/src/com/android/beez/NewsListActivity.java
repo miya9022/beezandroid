@@ -152,14 +152,12 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 					String headline_img = item.optString(Params.HEADLINE_IMG, "NULL");
 					String time = item.optString(Params.TIME, "NULL");
 					String app_domain = item.optString(Params.APP_DOMAIN, "NULL");
-					String origin_url = item.optString(Params.ORIGIN_URL,"NULL");
 					int view = item.optInt(Params.VIEW, 0);
 					if (headline_img != null){
 						news.setHeadline_img(headline_img);
 						news.setTime(time);
 						news.setApp_domain(app_domain);
 						news.setView(view);
-						news.setOrigin_url(origin_url);
 					} else {
 						news.setHeadline_img(default_img_url);
 					}
@@ -174,10 +172,12 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 			if(adapter == null){
 				adapter = new NewsAdapter(this, newsList, false);
 				gridView.setAdapter(adapter); 
+				adapter.setColumWidth(gridView.getColumnWidth());
 			} else {
 				if (newsList.size() > 0) {
 					adapter.getEntries().addAll(newsList);
 					adapter.notifyDataSetChanged();
+					adapter.setColumWidth(gridView.getColumnWidth());
 				}
 			}
 		} catch(Exception ex){
@@ -255,7 +255,7 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 		i.putExtra(Params.VIEW, entry.getView());
 		i.putExtra(Params.ID,entry.getId());
 		i.putExtra(Params.ORIGIN_URL, entry.getOrigin_url());
-		Toast.makeText(getApplicationContext(), entry.getOrigin_url(), Toast.LENGTH_LONG).show();
+//		Toast.makeText(getApplicationContext(), entry.getOrigin_url(), Toast.LENGTH_LONG).show();
 		startActivity(i);
 	}
 }

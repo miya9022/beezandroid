@@ -8,6 +8,7 @@
         android:layout_width="fill_parent"
        	android:layout_height="110dp"
         android:orientation="horizontal" 
+        android:background="@color/red"
         android:id="@+id/lnr_head_img_lo">
         
 	    <ImageView
@@ -16,6 +17,7 @@
 	        android:layout_height="match_parent"
 	        android:adjustViewBounds="true"
 	        android:layout_margin="5dp"
+	        android:background="@drawable/background_round_top"
 	        android:scaleType="center" />
 	    
 	    <LinearLayout

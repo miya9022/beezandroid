@@ -1,5 +1,9 @@
 package com.android.beez.adapter;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Queue;
 import java.util.Random;
@@ -12,6 +16,17 @@ import com.etsy.android.grid.util.DynamicHeightImageView;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Bitmap.Config;
+import android.graphics.PorterDuff.Mode;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -20,6 +35,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class NewsAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
@@ -29,18 +45,28 @@ public class NewsAdapter extends BaseAdapter {
 	private ImageFetcher imageFetcher;
 	private AlertDialog alert;
 	private final Random mRandom;
+	private int columWidth = 0;
+
+	public int getColumWidth() {
+		return columWidth;
+	}
+
+	public void setColumWidth(int columWidth) {
+		this.columWidth = columWidth;
+	}
+
 	private static final SparseArray<Double> sPositionHeightRatios = new SparseArray<Double>();
-	
+
 	private static final String TAG = "NewsAdapter";
-	
+
 	@Override
 	public int getCount() {
-		return entries!=null ? entries.size() : 0;
+		return entries != null ? entries.size() : 0;
 	}
 
 	@Override
 	public Object getItem(int position) {
-		if (entries != null && entries.size()>0){
+		if (entries != null && entries.size() > 0) {
 			return entries.get(position);
 		}
 		return null;
@@ -48,9 +74,9 @@ public class NewsAdapter extends BaseAdapter {
 
 	@Override
 	public long getItemId(int position) {
-		if (entries != null && entries.size()>0){
-			return (entries.get(position).getId()==null)?
-					0:Long.valueOf(entries.get(position).getId());
+		if (entries != null && entries.size() > 0) {
+			return (entries.get(position).getId() == null) ? 0 : Long
+					.valueOf(entries.get(position).getId());
 		}
 		return 0;
 	}
@@ -60,54 +86,81 @@ public class NewsAdapter extends BaseAdapter {
 		View view = convertView;
 		NewsEntryHolder holder = null;
 		final NewsBeez entry = entries.get(position);
-		if(this.layoutResourceId == R.layout.item_listview){
-			if(view == null){
+		if (this.layoutResourceId == R.layout.item_listview) {
+			if (view == null) {
 				view = inflater.inflate(this.layoutResourceId, parent, false);
 				holder = new NewsEntryHolder();
-				holder.headline_img = (ImageView) view.findViewById(R.id.headline_img_by_app_domain);
-				holder.title = (TextView) view.findViewById(R.id.title_by_app_domain);
-				holder.app_domain = (TextView) view.findViewById(R.id.app_domain_source);
-				holder.time = (TextView) view.findViewById(R.id.time_by_app_domain);
-				holder.view = (TextView) view.findViewById(R.id.view_by_app_domain);
+				holder.headline_img = (ImageView) view
+						.findViewById(R.id.headline_img_by_app_domain);
+				holder.title = (TextView) view
+						.findViewById(R.id.title_by_app_domain);
+				holder.app_domain = (TextView) view
+						.findViewById(R.id.app_domain_source);
+				holder.time = (TextView) view
+						.findViewById(R.id.time_by_app_domain);
+				holder.view = (TextView) view
+						.findViewById(R.id.view_by_app_domain);
 				view.setTag(holder);
 			} else {
-				holder = (NewsEntryHolder)view.getTag();
+				holder = (NewsEntryHolder) view.getTag();
 			}
 			holder.title.setText(entry.getTitle());
 			holder.time.setText(entry.getTime());
 			holder.app_domain.setText(entry.getApp_domain());
-			holder.view.setText(entry.getView() != 0 ? entry.getView() + " view" : "NEW");
-			imageFetcher.loadImage(entry.getHeadline_img(), holder.headline_img, null);
+			holder.view.setText(entry.getView() != 0 ? entry.getView()
+					+ " view" : "NEW");
+			imageFetcher.loadImage(entry.getHeadline_img(),
+					holder.headline_img, null);
+			holder.headline_img.buildDrawingCache();
+			holder.headline_img
+					.setImageBitmap(getRoundedCornerBitmap(holder.headline_img
+							.getDrawingCache()));
 		} else {
-			if(view == null){
+			if (view == null) {
 				view = inflater.inflate(this.layoutResourceId, parent, false);
 				holder = new NewsEntryHolder();
-				holder.gv_headline_img = (DynamicHeightImageView) view.findViewById(R.id.headline_img);
+				holder.gv_headline_img = (ImageView) view
+						.findViewById(R.id.headline_img);
 				holder.title = (TextView) view.findViewById(R.id.title);
-				//holder.headline = (TextView) view.findViewById(R.id.headline);
+				// holder.headline = (TextView)
+				// view.findViewById(R.id.headline);
+
 				holder.time = (TextView) view.findViewById(R.id.time);
-				holder.app_domain = (TextView) view.findViewById(R.id.app_domain);
+				holder.app_domain = (TextView) view
+						.findViewById(R.id.app_domain);
 				holder.view = (TextView) view.findViewById(R.id.view);
 				view.setTag(holder);
+
 			} else {
-				holder = (NewsEntryHolder)view.getTag();
+				holder = (NewsEntryHolder) view.getTag();
 			}
-			
+
 			holder.title.setText(entry.getTitle());
-			//holder.headline.setText(entry.getHeadline());
+			// holder.headline.setText(entry.getHeadline());
 			holder.time.setText(entry.getTime());
 			holder.app_domain.setText(entry.getApp_domain());
-			holder.view.setText(entry.getView() != 0 ? entry.getView() + " view" : "NEW");
+			holder.view.setText(entry.getView() != 0 ? entry.getView()
+					+ " view" : "NEW");
 			double positionHeight = getPositionRatio(position);
-	        holder.gv_headline_img.setHeightRatio(positionHeight);
-	        imageFetcher.setImageSize(holder.gv_headline_img.getWidth(),(int)Math.round(positionHeight));
-			imageFetcher.loadImage(entry.getHeadline_img(), holder.gv_headline_img, null);
+			// holder.gv_headline_img.setHeightRatio(positionHeight);
+
+			// imageFetcher.loadImage(entry.getHeadline_img(),
+			// holder.gv_headline_img, null);
+			// imageFetcher.setImageSize(columWidth,
+			// (int) Math.round(positionHeight));
+			Bitmap temp = imageFetcher.processBitmap(entry.getHeadline_img());
+			Bitmap resizedBitmap = Bitmap.createScaledBitmap(
+				    temp, columWidth, getBitmapHeight(temp.getWidth(), temp.getHeight(), columWidth), false);
+			Bitmap rounded = getRoundedCornerBitmap(resizedBitmap);
+			holder.gv_headline_img.setImageBitmap(rounded);
+			// holder.gv_headline_img.buildDrawingCache();
+			// holder.gv_headline_img.setImageBitmap(getRoundedCornerBitmap(holder.gv_headline_img.getDrawingCache()));
 		}
 		return view;
 	}
-	
-	static class NewsEntryHolder{
-		DynamicHeightImageView gv_headline_img;
+
+	static class NewsEntryHolder {
+		ImageView gv_headline_img;
 		ImageView headline_img;
 		TextView title;
 		TextView headline;
@@ -115,48 +168,50 @@ public class NewsAdapter extends BaseAdapter {
 		TextView view;
 		TextView app_domain;
 	}
-	
+
 	private double getPositionRatio(final int position) {
-        double ratio = sPositionHeightRatios.get(position, 0.0);
-        if (ratio == 0) {
-            ratio = getRandomHeightRatio();
-            sPositionHeightRatios.append(position, ratio);
-            Log.d(TAG, "getPositionRatio:" + position + " ratio:" + ratio);
-        }
-        return ratio;
-    }
- 
-    private double getRandomHeightRatio() {
-        return (mRandom.nextDouble() / 2.0) + 1.0; // height will be 1.0 - 1.5
-                                                    // the width
-    }
-	
-//	public NewsAdapter(Context context, Queue<NewsBeez> entriesDisplay) {
-//		super();
-//		this.entries = entriesDisplay;
-//		
-//		this.layoutResourceId = R.layout.item_newslist;
-//		this.context = context;
-//		this.inflater = (LayoutInflater) context
-//				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//		this.imageFetcher = AppController.getInstance().getImageFetcher();
-//	}
-    
-    public NewsAdapter(Context context, ArrayList<NewsBeez> entries, boolean viewContent) {
+		double ratio = sPositionHeightRatios.get(position, 0.0);
+		if (ratio == 0) {
+			ratio = getRandomHeightRatio();
+			sPositionHeightRatios.append(position, ratio);
+			Log.d(TAG, "getPositionRatio:" + position + " ratio:" + ratio);
+		}
+		return ratio;
+	}
+
+	private double getRandomHeightRatio() {
+		return (mRandom.nextDouble() / 2.0) + 1.0; // height will be 1.0 - 1.5
+													// the width
+	}
+
+	// public NewsAdapter(Context context, Queue<NewsBeez> entriesDisplay) {
+	// super();
+	// this.entries = entriesDisplay;
+	//
+	// this.layoutResourceId = R.layout.item_newslist;
+	// this.context = context;
+	// this.inflater = (LayoutInflater) context
+	// .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	// this.imageFetcher = AppController.getInstance().getImageFetcher();
+	// }
+
+	public NewsAdapter(Context context, ArrayList<NewsBeez> entries,
+			boolean viewContent) {
 		super();
 		this.entries = entries;
-		this.layoutResourceId = viewContent ? R.layout.item_listview : R.layout.item_gridview;
+		this.layoutResourceId = viewContent ? R.layout.item_listview
+				: R.layout.item_gridview;
 		this.context = context;
 		this.inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.imageFetcher = AppController.getInstance().getImageFetcher();
 		this.mRandom = new Random();
 	}
-	
+
 	public NewsAdapter(Context context, ArrayList<NewsBeez> entries) {
 		super();
 		this.entries = entries;
-		
+
 		this.layoutResourceId = R.layout.item_gridview;
 		this.context = context;
 		this.inflater = (LayoutInflater) context
@@ -212,4 +267,47 @@ public class NewsAdapter extends BaseAdapter {
 	public void setAlert(AlertDialog alert) {
 		this.alert = alert;
 	}
+
+	public static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
+		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+				bitmap.getHeight(), Config.ARGB_8888);
+		Canvas canvas = new Canvas(output);
+
+		final int color = 0xff424242;
+		final Paint paint = new Paint();
+		final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+		final RectF rectF = new RectF(rect);
+		final float roundPx = 5;
+
+		paint.setAntiAlias(true);
+		canvas.drawARGB(0, 0, 0, 0);
+		paint.setColor(color);
+		canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+		canvas.drawBitmap(bitmap, rect, rect, paint);
+
+		return output;
+	}
+
+	public static Bitmap getBitmapFromURL(String src) {
+		try {
+			URL url = new URL(src);
+			HttpURLConnection connection = (HttpURLConnection) url
+					.openConnection();
+			connection.setDoInput(true);
+			connection.connect();
+			InputStream input = connection.getInputStream();
+			Bitmap myBitmap = BitmapFactory.decodeStream(input);
+			return myBitmap;
+		} catch (IOException e) {
+			// Log exception
+			return null;
+		}
+	}
+
+	public int getBitmapHeight(int rawWidth, int rawHeight, int columnWidth) {
+		return rawHeight * columnWidth / rawWidth;
+
+	}
+
 }

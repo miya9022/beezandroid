@@ -202,7 +202,7 @@ public class MoreContentActivity extends MenuActivity {
 			if(beezPost.getApp_id().equals("beez"))
 				webview.loadData(beezPost.getContent(), "text/html; charset=utf-8",null);
 			else
-				webview.loadUrl(intent.getStringExtra(Params.ORIGIN_URL));
+				webview.loadUrl(beezPost.getOrigin_url());
 //				
 		}
 
