@@ -139,7 +139,7 @@ public class ViewContentActivity extends MenuActivity {
 		String time = intent.getStringExtra(Params.TIME);
 		origin_url = intent.getStringExtra(Params.ORIGIN_URL);
 		post_id = intent.getStringExtra(Params.ID);
-		Toast.makeText(getApplicationContext(), post_id, Toast.LENGTH_LONG).show();
+		Toast.makeText(getApplicationContext(), origin_url, Toast.LENGTH_LONG).show();
 		int view = intent.getIntExtra(Params.VIEW, 0);
 		if(!app_domain.isEmpty()){
 			app_domain_display = app_domain;

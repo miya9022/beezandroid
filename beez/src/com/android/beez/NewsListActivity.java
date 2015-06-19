@@ -159,6 +159,7 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 						news.setTime(time);
 						news.setApp_domain(app_domain);
 						news.setView(view);
+						news.setOrigin_url(origin_url);
 					} else {
 						news.setHeadline_img(default_img_url);
 					}
