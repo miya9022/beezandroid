@@ -42,19 +42,19 @@ public class NewsBeezApiClient extends BaseNewsSourceApiClient {
 
 		StringRequest req = new StringRequest(apiUri, listener, errorListener);
 		AppController.getInstance().addToRequestQueue(req);
-		return null;
+		return apiUri;
 	}
 
 	@Override
-	public String LoadDataById(Listener<String> listener,
-			ErrorListener errorListener) {
+	public String LoadDataById(Listener<String> listener, ErrorListener errorListener) {
 		StringBuilder sb = new StringBuilder(this.apiBaseUrl);
 		sb.append(Params.DATA_URl);
 		String apiUri = sb.toString();
 		
 		StringRequest req = new StringRequest(apiUri, listener, errorListener);
 		AppController.getInstance().addToRequestQueue(req);
-		return null;
+		
+		return apiUri;
 	}
 	
 }

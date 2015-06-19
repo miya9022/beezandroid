@@ -12,7 +12,9 @@ public class Params {
 	
 	//main attributes
 	public static final String ID = "id";
+	public static final String NAME = "name";
 	public static final String TITLE = "title";
+	public static final String APP_ID = "app_id";
 	public static final String HEADLINE = "headline";
 	public static final String HEADLINE_IMG = "headline_img";
 	public static final String ORIGIN_URL = "origin_url";
@@ -22,6 +24,7 @@ public class Params {
 	public static final String SHORT_LINK = "short_link";
 	public static final String TIME = "time";
 	public static final String VIEW = "view";
+	public static final String DATA_TYPE = "DataType";
 	
 	//tables in database
 	public static final String NEWS = "NEWS";

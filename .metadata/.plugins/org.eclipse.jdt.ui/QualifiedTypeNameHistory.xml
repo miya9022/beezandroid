@@ -1,22 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.android.beez.model.NewsBeez"/>
-<fullyQualifiedTypeName name="com.android.beez.api.NewsSourceApiClient"/>
-<fullyQualifiedTypeName name="org.json.JSONObject"/>
-<fullyQualifiedTypeName name="com.android.beez.utils.ShowMessage"/>
-<fullyQualifiedTypeName name="org.json.JSONArray"/>
-<fullyQualifiedTypeName name="com.android.beez.utils.JSON2Object"/>
-<fullyQualifiedTypeName name="com.gcm.GCMManager"/>
-<fullyQualifiedTypeName name="com.android.beez.adapter.NewsAdapter"/>
-<fullyQualifiedTypeName name="android.graphics.Bitmap"/>
-<fullyQualifiedTypeName name="android.graphics.drawable.BitmapDrawable"/>
 <fullyQualifiedTypeName name="java.util.Queue"/>
 <fullyQualifiedTypeName name="com.origamilabs.library.views.StaggeredGridView"/>
 <fullyQualifiedTypeName name="com.etsy.android.grid.StaggeredGridView"/>
 <fullyQualifiedTypeName name="android.util.SparseArray"/>
 <fullyQualifiedTypeName name="java.util.Random"/>
 <fullyQualifiedTypeName name="com.android.beez.loadimage.ImageWorker.AsyncDrawable"/>
-<fullyQualifiedTypeName name="android.widget.AdapterView.OnItemClickListener"/>
 <fullyQualifiedTypeName name="com.android.beez.NewsListActivity"/>
 <fullyQualifiedTypeName name="com.android.beez.ViewContentActivity"/>
 <fullyQualifiedTypeName name="android.content.Intent"/>
@@ -26,7 +15,6 @@
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.widget.ImageView"/>
 <fullyQualifiedTypeName name="com.android.beez.app.AppController"/>
-<fullyQualifiedTypeName name="com.android.beez.R.layout"/>
 <fullyQualifiedTypeName name="android.widget.Button"/>
 <fullyQualifiedTypeName name="com.android.beez.MoreContentActivity"/>
 <fullyQualifiedTypeName name="android.widget.ListView"/>
@@ -38,7 +26,6 @@
 <fullyQualifiedTypeName name="com.android.beez.FavouriteActivity"/>
 <fullyQualifiedTypeName name="com.android.beez.R.drawable"/>
 <fullyQualifiedTypeName name="android.widget.ImageButton"/>
-<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.widget.AbsListView.OnScrollListener"/>
 <fullyQualifiedTypeName name="com.android.beez.SuggestActivity"/>
 <fullyQualifiedTypeName name="com.android.beez.adapter.SuggestAdapter"/>
@@ -49,15 +36,28 @@
 <fullyQualifiedTypeName name="android.view.ViewTreeObserver.OnGlobalLayoutListener"/>
 <fullyQualifiedTypeName name="android.view.View.MeasureSpec"/>
 <fullyQualifiedTypeName name="android.widget.ListAdapter"/>
-<fullyQualifiedTypeName name="android.widget.GridView"/>
 <fullyQualifiedTypeName name="com.android.beez.ui.Slidemenu.SlidemenuAdapter.AppItemAdapter"/>
 <fullyQualifiedTypeName name="android.widget.BaseAdapter"/>
-<fullyQualifiedTypeName name="com.android.beez.adapter.DomainItemAdapter"/>
 <fullyQualifiedTypeName name="com.android.volley.Response.Listener"/>
 <fullyQualifiedTypeName name="com.android.volley.Response"/>
 <fullyQualifiedTypeName name="com.android.volley.Response.ErrorListener"/>
 <fullyQualifiedTypeName name="com.android.beez.adapter.DomainItemAdapter.DomainEntryHolder"/>
-<fullyQualifiedTypeName name="com.android.beez.R.id"/>
 <fullyQualifiedTypeName name="java.io.Serializable"/>
+<fullyQualifiedTypeName name="com.android.beez.adapter.CateItemAdapter"/>
+<fullyQualifiedTypeName name="android.webkit.WebView.FindListener"/>
+<fullyQualifiedTypeName name="com.android.beez.R.id"/>
 <fullyQualifiedTypeName name="com.android.beez.model.AppDomainBeez"/>
+<fullyQualifiedTypeName name="com.android.beez.adapter.DomainItemAdapter"/>
+<fullyQualifiedTypeName name="android.widget.GridView"/>
+<fullyQualifiedTypeName name="android.widget.ExpandableListView"/>
+<fullyQualifiedTypeName name="android.widget.BaseExpandableListAdapter"/>
+<fullyQualifiedTypeName name="com.android.beez.ui.Slidemenu.SlidingmenuItemHolder"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="com.android.beez.model.CategoryBeez"/>
+<fullyQualifiedTypeName name="android.app.ActionBar.LayoutParams"/>
+<fullyQualifiedTypeName name="android.widget.RelativeLayout"/>
+<fullyQualifiedTypeName name="com.android.beez.R.layout"/>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="android.widget.AdapterView.OnItemClickListener"/>
+<fullyQualifiedTypeName name="com.android.beez.ListNewsByDataActivity"/>
 </qualifiedTypeNameHistroy>

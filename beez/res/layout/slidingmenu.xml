@@ -21,18 +21,20 @@
 
     </LinearLayout>
 
-    <ListView
+    <ExpandableListView
         android:id="@+id/slidingmenu"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
         android:fadingEdgeLength="1dip"
         android:scrollbars="none"
         android:background="@color/transparent"
         android:cacheColorHint="@color/white"
         android:divider="@color/lightGray"
         android:dividerHeight="1dp" >
-    </ListView>
+    </ExpandableListView>
 <View
     android:layout_width="fill_parent"
     android:layout_height="1dip"

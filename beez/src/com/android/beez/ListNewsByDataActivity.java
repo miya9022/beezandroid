@@ -1,9 +1,9 @@
 package com.android.beez;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Queue;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.android.beez.adapter.NewsAdapter;
@@ -11,19 +11,13 @@ import com.android.beez.api.NewsSourceApiClient;
 import com.android.beez.app.AppController;
 import com.android.beez.model.NewsBeez;
 import com.android.beez.ui.Actionbar;
-import com.android.beez.ui.InterstitialAds;
 import com.android.beez.ui.Slidemenu;
 import com.android.beez.utils.JSON2Object;
 import com.android.beez.utils.Params;
 import com.android.beez.utils.ShowMessage;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.gcm.GCMManager;
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.origamilabs.library.views.StaggeredGridView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -31,15 +25,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 
-public class NewsListActivity extends MenuActivity implements InterstitialAds.OnInterstitialAdsEventListener, 
-	AbsListView.OnItemClickListener {
+public class ListNewsByDataActivity extends MenuActivity implements AbsListView.OnItemClickListener {
+	
 	private com.etsy.android.grid.StaggeredGridView gridView;
 	
 	private Button loadMore;
@@ -55,15 +49,22 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 	private ImageButton imgb_scrolltop;
 	private int page = 0;
 	
+	private String dataType;
+	private String id;
+	private String name;
+	private String title;
+	private String app_domain_head;
+	
 	private final String default_img_url = "http://beez.club/img/38x38xfavicon.png.pagespeed.ic.lvWi7wDCqW.png";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu);
-        Slidemenu.getInstance().clearMenuActivity(this);
-//      GCMManager.getInstace().init(this);
-        // load more
-        loadMore = new Button(this);
+		Slidemenu.getInstance().clearMenuActivity(this);
+		Intent intent = getIntent();
+		init(intent);
+		
+		loadMore = new Button(this);
         loadMore.setText(R.string.btn_more);
 		loadMore.setBackgroundColor(R.drawable.mybutton);
 		loadMore.setTextColor(getResources().getColor(R.color.white));
@@ -77,7 +78,7 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 		// initiate staggered grid view
 		gridView = (com.etsy.android.grid.StaggeredGridView) findViewById(R.id.staggeredGridview);
 		gridView.addFooterView(loadMore);
-        onButtonLoadMoreClick(null);
+		onButtonLoadMoreClick(null);
         gridView.setOnItemClickListener(this);
         
         // scroll to top
@@ -110,6 +111,14 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 		});
         
         if(nomoreData) loadMore.setVisibility(View.GONE);
+	}
+	
+	protected void init(Intent intent){
+		dataType = intent.getStringExtra(Params.DATA_TYPE);
+		id = intent.getStringExtra(Params.ID);
+//		name = intent.getStringExtra(Params.NAME);
+//		title = intent.getStringExtra(Params.TITLE);
+		app_domain_head = intent.getStringExtra(Params.APP_DOMAIN);
 	}
 	
 	protected void onShowListResponse(String data) {
@@ -149,6 +158,7 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 					String headline_img = item.optString(Params.HEADLINE_IMG, "NULL");
 					String time = item.optString(Params.TIME, "NULL");
 					String app_domain = item.optString(Params.APP_DOMAIN, "NULL");
+					String cate_id = item.optString(Params.CATE_ID, "NULL");
 					int view = item.optInt(Params.VIEW, 0);
 					if (headline_img != null){
 						news.setHeadline_img(headline_img);
@@ -158,10 +168,30 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 					} else {
 						news.setHeadline_img(default_img_url);
 					}
-					
-					if(newsList.size() < quota_display){
-						newsList.add(news);
+					if("category".equals(dataType)){
+						String [] cate_ids = cate_id.split(",");
+						boolean cate_contained = false;
+						int a = 0;
+						while(a < cate_ids.length){
+							if(cate_ids[a].trim().equals(id)){
+								cate_contained = true;
+								break;
+							}
+							a++;
+						}
+						if(cate_contained == true){
+							if(newsList.size() < quota_display){
+								newsList.add(news);
+							}
+						}
+					} else if("domain".equals(dataType)){
+						if(news.getApp_domain().equals(app_domain_head)){
+							if(newsList.size() < quota_display){
+								newsList.add(news);
+							}
+						}
 					}
+					
 					nomoreData = (i == jsonItems.length()-1) ? true: false;
 				}
 			}
@@ -241,7 +271,7 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 			long id) {
 		// TODO Auto-generated method stub
 		NewsBeez entry = newsList.get(position);
-		Intent i = new Intent(NewsListActivity.this, ViewContentActivity.class);
+		Intent i = new Intent(ListNewsByDataActivity.this, ViewContentActivity.class);
 		i.putExtra(Params.TITLE, entry.getTitle());
 		i.putExtra(Params.HEADLINE, entry.getHeadline());
 		i.putExtra(Params.HEADLINE_IMG, entry.getHeadline_img());

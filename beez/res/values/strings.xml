@@ -96,5 +96,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_favourite">FavouriteActivity</string>
     <string name="title_activity_suggest">SuggestActivity</string>
+    <string name="title_activity_list_news_by_data">ListNewsByDataActivity</string>
 
 </resources>

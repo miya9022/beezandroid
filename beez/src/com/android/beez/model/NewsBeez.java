@@ -18,6 +18,34 @@ public class NewsBeez implements Serializable {
 	private String short_link;
 	private String time;
 	
+	private String name;
+	private String app_id;
+	private boolean isCate;
+	
+	public boolean isCate() {
+		return isCate;
+	}
+
+	public void setCate(boolean isCate) {
+		this.isCate = isCate;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getApp_id() {
+		return app_id;
+	}
+
+	public void setApp_id(String app_id) {
+		this.app_id = app_id;
+	}
+
 	private int rank;
 	private int view = 0;
 		

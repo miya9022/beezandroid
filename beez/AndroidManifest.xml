@@ -48,6 +48,10 @@
             android:name=".SuggestActivity"
             android:label="@string/title_activity_suggest" >
         </activity>
+        <activity
+            android:name=".ListNewsByDataActivity"
+            android:label="@string/title_activity_list_news_by_data" >
+        </activity>
     </application>
 
 </manifest>
