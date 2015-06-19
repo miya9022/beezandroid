@@ -7,6 +7,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
 
 import android.content.Context;
+import android.util.Log;
 
 public class NewsBeezApiClient extends BaseNewsSourceApiClient {
 
@@ -20,7 +21,7 @@ public class NewsBeezApiClient extends BaseNewsSourceApiClient {
 		StringBuilder sb = new StringBuilder(this.apiBaseUrl);
 		sb.append(Params.LISTPOST);
 		String apiUri = sb.toString();
-
+		
 		StringRequest req = new StringRequest(apiUri, listener, errorListener);
 		AppController.getInstance().addToRequestQueue(req);
 		

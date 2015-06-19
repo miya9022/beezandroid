@@ -28,6 +28,7 @@ import com.origamilabs.library.views.StaggeredGridView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +38,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class NewsListActivity extends MenuActivity implements InterstitialAds.OnInterstitialAdsEventListener, 
 	AbsListView.OnItemClickListener {
@@ -127,6 +129,7 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 			}
 			
 			String strData = jsonObject.getString(Params.DATA);
+			
 			if(strData == null){
 				nomoreData = true;
 				loadMore.setVisibility(View.GONE);
@@ -149,6 +152,7 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 					String headline_img = item.optString(Params.HEADLINE_IMG, "NULL");
 					String time = item.optString(Params.TIME, "NULL");
 					String app_domain = item.optString(Params.APP_DOMAIN, "NULL");
+					String origin_url = item.optString(Params.ORIGIN_URL,"NULL");
 					int view = item.optInt(Params.VIEW, 0);
 					if (headline_img != null){
 						news.setHeadline_img(headline_img);
@@ -248,6 +252,9 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 		i.putExtra(Params.APP_DOMAIN, entry.getApp_domain());
 		i.putExtra(Params.TIME, entry.getTime());
 		i.putExtra(Params.VIEW, entry.getView());
+		i.putExtra(Params.ID,entry.getId());
+		i.putExtra(Params.ORIGIN_URL, entry.getOrigin_url());
+		Toast.makeText(getApplicationContext(), entry.getOrigin_url(), Toast.LENGTH_LONG).show();
 		startActivity(i);
 	}
 }

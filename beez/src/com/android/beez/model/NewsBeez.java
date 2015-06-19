@@ -3,10 +3,7 @@ package com.android.beez.model;
 import java.io.Serializable;
 
 public class NewsBeez implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 754189098001845039L;
+
 	private String id;
 	private String title;
 	private String headline;

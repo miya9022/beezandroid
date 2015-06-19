@@ -30,8 +30,8 @@ proguard/
 .metadata/
 
 # Eclipse config
-.classpath
-.project
+beez/.classpath
+beez/.project
 project.properties
 
 # Mac OS X clutter

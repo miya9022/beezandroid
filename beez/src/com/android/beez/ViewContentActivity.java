@@ -3,6 +3,8 @@ package com.android.beez;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import javax.xml.datatype.Duration;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -44,6 +46,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ViewContentActivity extends MenuActivity {
 
@@ -54,7 +57,8 @@ public class ViewContentActivity extends MenuActivity {
 	private String app_domain_display;
 	private String title_displayed;
 	private int listViewHeight = 0;
-	
+
+	private String origin_url;
 	//view holders
 	private ImageView iv_headline_img;
 	private TextView tv_title;
@@ -64,8 +68,12 @@ public class ViewContentActivity extends MenuActivity {
 	private TextView tv_view;
 	private ImageFetcher ifetcher;
 	private Button bt_viewmore;
+
 	private ScrollView scrollView;
 	private LinearLayout header_layout;
+
+	private String post_id;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +82,6 @@ public class ViewContentActivity extends MenuActivity {
 		Slidemenu.getInstance().clearMenuActivity(this);
 		Intent intent = getIntent();
 		init(intent);
-		
 		listView = (ListView) findViewById(R.id.listview);
 		scrollView = (ScrollView) findViewById(R.id.scroll_view_list);
 		onLoadPostsByAppDomain(null);
@@ -130,6 +137,9 @@ public class ViewContentActivity extends MenuActivity {
 		String headline_img = intent.getStringExtra(Params.HEADLINE_IMG);
 		String app_domain = intent.getStringExtra(Params.APP_DOMAIN);
 		String time = intent.getStringExtra(Params.TIME);
+		origin_url = intent.getStringExtra(Params.ORIGIN_URL);
+		post_id = intent.getStringExtra(Params.ID);
+		Toast.makeText(getApplicationContext(), post_id, Toast.LENGTH_LONG).show();
 		int view = intent.getIntExtra(Params.VIEW, 0);
 		if(!app_domain.isEmpty()){
 			app_domain_display = app_domain;
@@ -162,7 +172,9 @@ public class ViewContentActivity extends MenuActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(ViewContentActivity.this, MoreContentActivity.class);
-				// TODO: anhnt
+
+				intent.putExtra(Params.ID, post_id);
+				intent.putExtra(Params.ORIGIN_URL,origin_url);
 				startActivity(intent);
 			}
 		});

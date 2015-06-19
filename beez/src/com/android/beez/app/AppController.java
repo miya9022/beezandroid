@@ -67,7 +67,7 @@ public class AppController extends Application {
 	 * Global Beez API client
 	 */
 	private NewsSourceApiClient NewsApiClient;
-	
+	private BeezGetPostApiClient BeezPost;
 	/**
 	 * Global Internet connection state detector 
 	 */
@@ -260,6 +260,15 @@ public class AppController extends Application {
     
     public NewsSourceApiClient getNewsApiClient(){
     	return NewsApiClient;
+    }
+    public BeezGetPostApiClient getBeePost(){
+    	return BeezPost;
+    }
+    public BeezGetPostApiClient getBeePost(int sourceType){
+    	String baseUrl = properties.getProperty("base_url");
+    	String apiBaseUrl = properties.getProperty("api_base_url");		
+    	BeezPost = new BeezGetPostApiClient(baseUrl, apiBaseUrl,getApplicationContext());
+    	return BeezPost;
     }
     
     public NewsSourceApiClient getNewsApiClient(int sourceType){
