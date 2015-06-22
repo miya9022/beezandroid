@@ -252,10 +252,10 @@ public class NewsListActivity extends MenuActivity implements InterstitialAds.On
 		i.putExtra(Params.HEADLINE_IMG, entry.getHeadline_img());
 		i.putExtra(Params.APP_DOMAIN, entry.getApp_domain());
 		i.putExtra(Params.TIME, entry.getTime());
+//		Toast.makeText(getApplicationContext(), entry.getTime(), Toast.LENGTH_LONG).show();
 		i.putExtra(Params.VIEW, entry.getView());
 		i.putExtra(Params.ID,entry.getId());
 		i.putExtra(Params.ORIGIN_URL, entry.getOrigin_url());
-//		Toast.makeText(getApplicationContext(), entry.getOrigin_url(), Toast.LENGTH_LONG).show();
 		startActivity(i);
 	}
 }

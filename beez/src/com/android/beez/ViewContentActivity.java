@@ -83,7 +83,6 @@ public class ViewContentActivity extends MenuActivity {
 		Intent intent = getIntent();
 		init(intent);
 		listView = (ListView) findViewById(R.id.listview);
-		scrollView = (ScrollView) findViewById(R.id.scroll_view_list);
 		onLoadPostsByAppDomain(null);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

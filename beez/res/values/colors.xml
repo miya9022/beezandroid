@@ -9,6 +9,7 @@
 	<color name="offWhite">#DDDDDD</color>
 	<color name="black">#000000</color>
 	<color name="title">#616161</color>
+	<color name="relate_text">#CAC7C1</color>
 	<color name="darkGray">#333333</color>
 	<color name="lightGray">#777777</color>
 	<color name="time_and_url">#C5C5C5</color>
@@ -16,9 +17,10 @@
 	<color name="brightGreen">#00FF00</color>
 	<color name="brightBlue">#2222EF</color>
 	<color name="darkBlue">#880000FF</color>
-	<color name="transparent">#F2F2F2</color>
+	<color name="background">#F2F2F2</color>
 	<color name="lightBlue">#1983ab</color>
 	<color name="btn_background">#6496ed</color>
 	<color name="btn_text">#6496ed</color>
+	
 	<color name="btn_text_bottombar">#c9435e</color>
 </resources>

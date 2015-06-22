@@ -9,7 +9,7 @@
         android:layout_height="60dp"
         android:orientation="horizontal"
         android:padding="5dp"
-        android:background="@color/transparent" >
+        android:background="@color/background" >
 
         <ImageView
             android:id="@+id/slidingmenu_item_thumb"
